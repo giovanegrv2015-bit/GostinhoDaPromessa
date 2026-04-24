@@ -16,7 +16,7 @@ body {
     font-weight: 800;
     font-size: 30px;
     font-family: Arial, Helvetica, sans-serif;
-    color: var(text-color);
+    color: var(--primary-dark);
 }
 
 .content{
@@ -24,8 +24,8 @@ body {
     padding: 60px;
     width: 350px;
     border-radius: 10%;
-    border: 3px solid rgba(22, 160, 133, 0.2);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+    border: 3px solid var(--primary-light);
+    box-shadow: 0 10px 25px var(--shadow-default);
 }
 
 .Login{
@@ -36,7 +36,7 @@ body {
     margin-bottom: 20px;
 }
 
-.User, .Passsword{
+.User, .Password{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -44,6 +44,7 @@ body {
     font-weight: 600;
     font-size: 15px;
     font-family: Arial, Helvetica, sans-serif;
+    color: var(--primary-dark);
 }
 
 .inputUser, .inputPassword {
@@ -59,9 +60,9 @@ body {
 hr {
     border: none;           
     height: 2px;            
-    background-color: black;
-    width: 50%;      
-    margin-bottom: 5px;
+    background-color: var(--primary-medium);
+    width: 100%;      
+    margin: 5px 0 10px 0;
 }
 
 .box-button {
@@ -91,5 +92,5 @@ hr {
 .inputUser:focus, .inputPassword:focus{
     border-color: var(--primary-medium);
     outline: none;
-    box-shadow: 0 0 5px var(--primary-medium)
+    box-shadow: 0 0 5px var(--primary-light);
 }

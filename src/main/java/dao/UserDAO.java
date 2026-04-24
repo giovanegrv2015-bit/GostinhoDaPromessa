@@ -21,13 +21,22 @@ public class UserDAO {
              if(rs.next()) {
                 String hashBanco = rs.getString("psw");
                 
-                return SenhaUtil.verificarSenha(
+                boolean senhaValida = SenhaUtil.verificarSenha(
                         userModel.getPassword(),
                         hashBanco
-                );        
+                );     
+                
+                if(senhaValida) {
+                    UserModel user = new UserModel();
+                    user.getUsername(rs.getString("username"));
+                    user.getPassword(hashBanco);
+                    user.getFuncao(rs.getString("funcao");
+                    
+                    return user;
+                }
          }
          
-         return false;
+         return null;
            
         } catch (Exception e) {
             e.printStackTrace();
