@@ -28,7 +28,7 @@ public class UserDAO {
                 
                 if(senhaValida) {
                     UserModel user = new UserModel();
-                    user.getUsername(rs.getString("username"));
+                    user.getUsername(rs.getString("username");
                     user.getPassword(hashBanco);
                     user.getFuncao(rs.getString("funcao");
                     
