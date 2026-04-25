@@ -33,9 +33,9 @@ async function carregarResumo() {
         const response = await fetch("http://localhost:8080/api/resumo");
         const dados = await response.json();
         
-        document.getElementById("cardEntrada").innerHTML = dados.entradaVal;
-        document.getElementById("cardSaida").innerHTML = dados.saidaVal;
-        document.getElementById("cardTotal").innerHTML = dados.totalVal;
+        document.getElementById("cardEntrada").innerHTML = dados.entrada;
+        document.getElementById("cardSaida").innerHTML = dados.saida;
+        document.getElementById("cardTotal").innerHTML = dados.total;
     } catch (erro) {
         console.log("Erro na consulta dos dados", erro);
     }

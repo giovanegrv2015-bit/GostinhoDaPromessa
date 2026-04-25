@@ -26,12 +26,15 @@ public class LoginServlet extends HttpServlet {
         userModel.setPassword(senha);
         
         UserDAO dao = new UserDAO();
+
+        UserModel user = dao.validarLogin(userModel);
         
-        if(dao.validarLogin(userModel)) {
+        if(user != null) {
             HttpSession session = 
                     request.getSession();
             
-            session.setAttribute("users", usuario);
+            session.setAttribute("usuario", user.getUsername());
+            session.setAttribute("perfil", user.getFuncao());
             
             response.sendRedirect(request.getContextPath() + "/pages/dashboard.html");
         }else {

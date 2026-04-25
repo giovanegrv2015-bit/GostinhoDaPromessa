@@ -8,7 +8,7 @@ import util.SenhaUtil;
 
 public class UserDAO {
     
-    public boolean validarLogin(UserModel userModel){
+    public UserModel validarLogin(UserModel userModel){
          String sql = "SELECT * FROM users WHERE username = ?";
          try (var con = ConnectionFactory.getConnection()) {
              
@@ -28,9 +28,9 @@ public class UserDAO {
                 
                 if(senhaValida) {
                     UserModel user = new UserModel();
-                    user.getUsername(rs.getString("username");
-                    user.getPassword(hashBanco);
-                    user.getFuncao(rs.getString("funcao");
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(hashBanco);
+                    user.setFuncao(rs.getString("funcao"));
                     
                     return user;
                 }
@@ -40,7 +40,7 @@ public class UserDAO {
            
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 }
