@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.CadastroProdutoModel;
@@ -16,8 +15,7 @@ public class CadastroProdutosDAO {
                      "(codigo_barras, nome_produto, fabricante, marca, data_fabricacao, data_vencimento, quantidade, valor, total, status) "+
                      "VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
-        try (Connection conn = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)){
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1, produto.getCodigoBarras());
             stmt.setString(2, produto.getNomeProduto());
             stmt.setString(3, produto.getFabricante());
@@ -50,11 +48,10 @@ public class CadastroProdutosDAO {
             sql.append(" AND status = ?");
         }
         if(data != null && !data.isEmpty()) {
-            sql.append(" AND data_fabricacao = ?");
+            sql.append(" AND data_vencimento = ?");
         }
 
-        try (Connection conn = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql.toString())){
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql.toString());){
             
             int index = 1;
             
@@ -81,7 +78,7 @@ public class CadastroProdutosDAO {
                 p.setDataVencimento(rs.getDate("data_vencimento").toLocalDate().toString());
                 p.setQuantidade(rs.getLong("quantidade"));
                 p.setValor(rs.getString("valor"));
-                p.setValor(rs.getString("total"));
+                p.setTotal(rs.getString("total"));
                 p.setStatus(rs.getString("status"));
                 
                 lista.add(p);
@@ -89,7 +86,6 @@ public class CadastroProdutosDAO {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        
         return lista;
     }
 }

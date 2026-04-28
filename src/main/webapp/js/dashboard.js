@@ -5,7 +5,7 @@ async function carregarEstoque() {
 
         const tabela = document.getElementById("corpoTabela");
         tabela.innerHTML = "";
-
+        console.log("Chegou aqui.");
         dados.forEach(item => {
             const linha = `
                 <tr>

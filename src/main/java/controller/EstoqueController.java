@@ -26,7 +26,7 @@ public class EstoqueController extends HttpServlet{
             String json = new Gson().toJson(lista);
             
             response.setContentType("application/json");
-            response.setCharacterEncoding("UT-8");
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
             
     }

@@ -24,32 +24,32 @@
                 <form action="../cadastroProdutos" method="POST" id="formCadastro">
                     <div class="linha-form">
                         <label for="codigoBarras">Código de Barras</label>
-                        <input type="text" name="codigoBarras" required />
+                        <input type="text" name="codigoBarras" id="codigoBarras" required />
                     </div>
 
                     <div class="grupo-form">
                         <label for="nomeProduto" >Nome do Produto</label>
-                        <input type="text" name="nomeProduto" required />
+                        <input type="text" name="nomeProduto" id="nomeProduto" required />
                     </div>
 
                     <div class="linha-form">
                         <label for="fabricante" >Fabricante</label>
-                        <input type="text" name="fabricante" required />
+                        <input type="text" name="fabricante" id="fabricante" required />
                     </div>
 
                     <div class="grupo-form">
                         <label for="marca" >Marca</label>
-                        <input type="text" name="marca" required />
+                        <input type="text" name="marca" id="marca" required />
                     </div>
                     <div class="linha-form">
                         <div class="grupo-form">
                             <label for="dataFabricacao" >Data de Fabricação</label>
-                            <input type="date" name="dataFabricacao" required />
+                            <input type="date" name="dataFabricacao" id="dataFabricacao" required />
                         </div>
 
                         <div class="grupo-form">
                             <label for="dataVencimento" >Data de Vencimento</label>
-                            <input type="date" name="dataVencimento" required />
+                            <input type="date" name="dataVencimento" id="dataVencimento" required />
                         </div>
                     </div>
                     <div class="linha-form">
@@ -67,6 +67,13 @@
                         <div class="grupo-form full">
                             <label>Total</label>
                             <input type="number" name="total" id="total" />
+                        </div>
+                        <div class="grupo-form full">
+                            <label for="status">Status</label>
+                            <select id="status" name="status">
+                                <option value="entrada">Entrada</option>
+                                <option value="saida">Saída</option>
+                            </select>
                         </div>
                     </div>
                     <div class="acoes-form">
