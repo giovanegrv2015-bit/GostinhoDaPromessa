@@ -1,8 +1,8 @@
 async function filtroEstoque() {
     try {
-        const nome = document.getElementeById("pesquisarNome").value;
-        const tipo = document.getElementeById("tipoMovimentacao").value;
-        const data = document.getElementeById("filtroData").value;
+        const nome = document.getElementById("pesquisarNome").value;
+        const tipo = document.getElementById("tipoMovimentacao").value;
+        const data = document.getElementById("filtroData").value;
 
         const url = `http://localhost:8080/api/estoque?nome=${encodeURIComponent(nome)}&tipo=${encodeURIComponent(tipo)}&data=${encodeURIComponent(data)}`;
         const response = await fetch(url);
@@ -37,7 +37,7 @@ async function filtroEstoque() {
         tabela.innerHTML += linha;
     });
 
-    } catch (error) {
+    } catch (erro) {
         console.error("Erro ao filtrar", erro);
     }    
 }
