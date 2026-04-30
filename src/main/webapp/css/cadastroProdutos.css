@@ -1,5 +1,5 @@
 body {
-    background-color: var(--gray-light);
+    background-color: var(--primary-light);
     font-family: Arial, Helvetica, sans-serif;
     padding: 20px;
 }
@@ -98,34 +98,38 @@ body {
 .acoes-form {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 30px;
+}
+
+.btn-salvar, 
+.btn-cancelar {
+    border: none;
+    padding: 12px 0px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    transition: 0.3s;
+    width: 150px;
+    text-align: center;
+    font-size: 16px;
+    text-decoration: none;
 }
 
 .btn-salvar {
     background-color: var(--success);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    color: var(--white);
+}
+
+.btn-cancelar {
+    background-color: var(--error);
+    color: var(--white);
 }
 
 .btn-salvar:hover {
     background-color: var(--success-hover);
 }
 
-.btn-cancelar {
-    background-color: var(--primary-light);
-    color: var(--primary-dark);
-    text-decoration: none;
-    padding: 10px 30px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-}
-
 .btn-cancelar:hover {
-    background-color: var(--gray-dark);
+    background-color: var(--error-hover);
 }

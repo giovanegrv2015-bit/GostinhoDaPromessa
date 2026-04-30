@@ -1,8 +1,8 @@
 :root {
     /* Cores principais */
-    --primary-dark: #3e2732; /* marrom escuro para textos e titulos */
-    --primary-medium: #6d4c41; /*marrom chocolate para foco e linhas */
-    --primary-light: #d7ccc8; /* creme suave para bordas e destaques */
+    --primary-dark: #5a020b; /* vinho da logo para textos e titulos */
+    --primary-medium: #801019; /*tom mais leve do vinho para foco e linhas */
+    --primary-light: #f1e4d4; /* creme da logo para fundo, bordas e destaques */
 
     /* Cor de ação (botões / confirmação) */
     --success: #1b9c85; /* verde para botao de login, salvar e confirmar */
@@ -16,4 +16,39 @@
     /* Sombra */
     --shadow-default: rgba(0, 0, 0, 0.2);
     
+    /* cores de cancelamento, alerta e erro*/
+    --error: #d32f2f; /* vermelho para botao de cancelar e alertas */
+    --error-hover: #b71c1c; /* vermelho mais escuro para hover, efeito do mouse */
 }
+
+
+/* --- TIPOGRAFIA ---
+   font-family: Define a fonte (tipo de letra).
+   font-size: Define o tamanho da letra (ex: 16px).
+   font-weight: Define a espessura/peso da letra (ex: bold/negrito).
+   text-align: Alinha o texto (left, center, right, justify).
+   text-decoration: Adiciona ou remove decorações (como o sublinhado de links).
+
+   --- BOX MODEL (A CAIXA) ---
+   width: Largura do elemento.
+   max-width: Largura máxima que o elemento pode atingir.
+   padding: Espaço INTERNO (entre o conteúdo e a borda).
+   margin: Espaço EXTERNO geral (afasta os elementos vizinhos).
+   margin-top: Espaço externo apenas no topo.
+   margin-bottom: Espaço externo apenas na base.
+   border-radius: Arredonda os cantos da borda.
+   box-shadow: Adiciona sombra ao redor da caixa.
+
+   --- FLEXBOX (ORGANIZAÇÃO DE LAYOUT) ---
+   display: Define o comportamento de exibição (flex ativa o layout flexível).
+   flex-direction: Define a direção dos itens (row = linha, column = coluna).
+   justify-content: Alinha os itens no eixo principal (horizontal por padrão).
+   flex-wrap: Define se os itens "pulam linha" quando não houver mais espaço.
+   flex: Define como o item cresce ou encolhe para ocupar o espaço disponível.
+   gap: Define o espaçamento exato entre os itens do flex.
+
+   --- INTERAÇÃO E OUTROS ---
+   list-style: Define o estilo dos marcadores de listas (ul/li).
+   cursor: Altera o visual do mouse (ex: pointer/mãozinha).
+   transition: Cria uma animação suave ao mudar propriedades (ex: no hover).
+   ============================================================ */
