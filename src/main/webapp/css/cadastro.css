@@ -49,6 +49,8 @@ nav a:hover {
     display: flex;
     gap: 30px;
     flex-wrap: wrap;
+    font-weight: bold;
+    color: var(--primary-dark);
 }
 
 .dadosPessoais,
@@ -82,7 +84,6 @@ select:focus {
 
 .dadosPessoais p {
     margin-top: 10px;
-    font-weight: bold;
 }
 
 .btn {
