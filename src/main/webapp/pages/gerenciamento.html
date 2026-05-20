@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/reset.css"/>
+        <link rel="stylesheet" href="../css/color.css"/>
+        <link rel="stylesheet" href="../css/gerenciamento.css"/>
+        <title>Gerenciamento</title>
+    </head>
+    
+    <body>
+        <header id="header">
+            <h1 id="tituloCadastro">Sistema de Estoque</h1>
+            <nav id="menu">
+                <ul class="menu-lista">
+                    <li><a href="dashboard.html">Início</a></li>
+                    <li><a href="gerenciamento.html">Gerenciamento</a></li>
+                    <li><a href="cadastro.html" class="btn-menu">Cadastro</a></li>
+                    <li><a href="#" id="btnlogout" class="btn-menu">Sair</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section id="secaoProdutos">
+                <div class="secao-topo">
+                    <h2 class="secao-titulo">Produtos em Estoque</h2>
+                    <div class="barra-acoes">
+                        <input type="text" id="buscarGerenciamento" class="input-busca" placeholder="Buscar produto pelo nome">
+                        <a href="cadastroProdutos.html" class="btn-novo-produto">Novo Produto</a>
+                    </div>
+                </div>
+                <div id="listaProdutos" class="lista-produto">
+                    <div class="loading-msg" id="loadingMsg">Carregando produtos</div>
+                </div>
+            </section>
+        </main>
+
+        <div id="modalOverlay" class="modal-overlay" style="display:none;">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3 id="modalTitulo">Editar Produto</h3>
+                    <button class="modal-fechar" id="btnFecharModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label>Nome do Produto</label>
+                            <input type="text" id="modal-nomeProduto"/>
+                        </div>
+                    </div>
+                    <div class=""
+                </div>
+            </div>
+        </div>
+            
+    </body>
+</html>
