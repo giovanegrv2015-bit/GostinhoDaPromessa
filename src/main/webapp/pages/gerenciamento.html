@@ -49,10 +49,60 @@
                             <input type="text" id="modal-nomeProduto"/>
                         </div>
                     </div>
-                    <div class=""
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label>Fabricante</label>
+                            <input type="text" id="modal-fabricante"/>
+                        </div>
+                        <div class="grupo-form">
+                            <label>Marca</label>
+                            <input type="text" id="modal-marca"/>
+                        </div>
+                    </div>
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label>Data de Fabricação</label>
+                            <input type="date" id="modal-dataFabricacao"/>
+                        </div>
+                        <div class="grupo-form">
+                            <label>Data de Vencimento</label>
+                            <input type="date" id="modal-dataVencimento"/>
+                        </div>
+                    </div>
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label>Quantidade</label>
+                            <input type="number" id="modal-quantidade"/>
+                        </div>
+                        <div class="grupo-form">
+                            <label>Valor Unitário</label>
+                            <input type="number" step="0.01" id="modal-valor"/>
+                        </div>
+                    </div>
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label>Total</label>
+                            <input type="number" id="modal-total" disabled class="input-disabled"/>
+                        </div>
+                        <div class="grupo-form">
+                            <label>Status</label>
+                            <select id="modal-status">
+                                <option value="entrada">Entrada</option>
+                                <option value="saida">Saída</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnSalvarEdicao" class="btn-salvar">Salvar Alterações</button>
+                    <button id="btnExcluirProduto" class="btn-excluir">Excluir Produto</button>
+                    <button id="btnCancelarModal" class="btn-cancelar">Cancelar</button>
                 </div>
             </div>
         </div>
-            
+
+        <script src="../js/gerenciamento.js"></script>
+        <script src="../js/validarLogin.js"></script>
+        <script src="../js/logout.js"></script>
     </body>
 </html>
