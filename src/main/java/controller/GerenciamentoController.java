@@ -5,9 +5,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.CadastroProdutoModel;
-
+import java.io.BufferedReader;
 import java.io.IOException;
-
+import com.google.gson.Gson;
 import dao.CadastroProdutosDAO;
 
 @WebServlet("/api/gerenciamento")
