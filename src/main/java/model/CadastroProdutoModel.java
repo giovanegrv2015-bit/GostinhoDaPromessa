@@ -13,10 +13,19 @@ public class CadastroProdutoModel {
     private String valor;
     private String total;
     private String status;
-
+    private String estoque;
+    
     
     public CadastroProdutoModel() {
         
+    }
+    
+    public String getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(String estoque) {
+        this.estoque = estoque;
     }
 
     public String getCodigoBarras() {
