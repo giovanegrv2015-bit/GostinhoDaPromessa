@@ -2,9 +2,9 @@ let codigoBarrasAtual = null;
 let produtosAtuais = [];
 
 const BASE_URL = "/api/estoque";
+const BASE_GERENCIAMENTO = "/api/gerenciamento"
 
 document.addEventListener("DOMContentLoaded", () => {
-
     carregarProdutos();
 
     document.getElementById("modal-quantidade").addEventListener("input", calcularTotal);
@@ -13,6 +13,17 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("buscarGerenciamento").addEventListener("input", (e) => {
         carregarProdutos(e.target.value);
     });
+
+    document.getElementById("btnFecharModal").addEventListener("click, fecharModal");
+    document.getElementById("btnCancelarModal").addEventListener("click, fecharModal");
+    document.getElementById("btnSalvarModal").addEventListener("click, salvarAlteracoes");
+    document.getElementById("btnExcluirModal").addEventListener("click", () => {
+        excluirProduto(codigoBarrasAtual);
+    }
+
+    document.getElementById("modalOverlay").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("modalOverlay")) fecharModal();
+        });
 });
 
 async function carregarProdutos(busca = "") {
@@ -63,7 +74,7 @@ async function carregarProdutos(busca = "") {
             }
 
             card.innerHTML = `
-        <div class="card-nome">${produto.nomeProduto}</div>
+        <div class="card-nome">${produto.nomeItem}</div>
         <div class="card-info">Marca: <span>${produto.marca || '-'}</span></div>
         <div class="card-info">Qtd: <span>${produto.quantidade}</span></div>
         <div class="card-info">Valor: Unit.: <span>R$ ${parseFloat(produto.valor).toFixed(2)}</span></div>

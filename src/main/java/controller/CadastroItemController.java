@@ -6,20 +6,20 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import model.CadastroProdutoModel;
-import dao.CadastroProdutosDAO;
+import model.CadastroItemModel;
+import dao.CadastroItemDAO;
 
 @WebServlet("/cadastroProdutos")
-public class CadastroProdutosController extends HttpServlet {
+public class CadastroItemController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        CadastroProdutoModel produto = new CadastroProdutoModel();
+        CadastroItemModel produto = new CadastroItemModel();
 
         produto.setCodigoBarras(request.getParameter("codigoBarras"));
-        produto.setNomeProduto(request.getParameter("nomeProduto"));
+        produto.setNomeItem(request.getParameter("nomeItem"));
         produto.setFabricante(request.getParameter("fabricante"));
         produto.setMarca(request.getParameter("marca"));
         produto.setDataFabricacao(request.getParameter("dataFabricacao"));
@@ -29,7 +29,7 @@ public class CadastroProdutosController extends HttpServlet {
         produto.setTotal(request.getParameter("total"));
         produto.setStatus(request.getParameter("status"));
 
-        CadastroProdutosDAO dao = new CadastroProdutosDAO();
+        CadastroItemDAO dao = new CadastroItemDAO();
 
         if (dao.salvar(produto)) {
             response.sendRedirect("pages/dashboard.html");

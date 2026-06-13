@@ -12,7 +12,7 @@ async function filtroEstoque() {
         tabela.innerHTML = "";
 
         const filtrados = dados.filter(item => {
-            const matchNome = nome === "" ||item.nomeProduto.toLowerCase().includes(nome);
+            const matchNome = nome === "" ||item.nomeItem.toLowerCase().includes(nome);
             const matchTipo = tipo === "" || item.status === tipo;
             const matchData = data === "" || item.dataFabricacao === data;
 
@@ -23,7 +23,7 @@ async function filtroEstoque() {
             const linha = `
             <tr>
                 <td>${item.codigoBarras}</td>
-                <td>${item.nomeProduto}</td>
+                <td>${item.nomeItem}</td>
                 <td>${item.fabricante}</td>
                 <td>${item.marca}</td>
                 <td>${item.dataFabricacao}</td>

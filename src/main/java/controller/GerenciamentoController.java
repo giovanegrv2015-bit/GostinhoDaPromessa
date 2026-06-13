@@ -4,11 +4,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.CadastroProdutoModel;
+import model.CadastroItemModel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import com.google.gson.Gson;
-import dao.CadastroProdutosDAO;
+import dao.CadastroItemDAO;
 
 @WebServlet("/api/gerenciamento")
 public class GerenciamentoController extends HttpServlet {
@@ -32,10 +32,10 @@ public class GerenciamentoController extends HttpServlet {
             }
         }
 
-        CadastroProdutoModel produto = new Gson().fromJson(sb.toString(), CadastroProdutoModel.class);
+        CadastroItemModel produto = new Gson().fromJson(sb.toString(), CadastroItemModel.class);
         produto.setCodigoBarras(codigoBarras);
         
-        CadastroProdutosDAO dao = new CadastroProdutosDAO();
+        CadastroItemDAO dao = new CadastroItemDAO();
         boolean sucesso = dao.atualizar(produto);
 
         response.setContentType("application/json");
@@ -62,7 +62,7 @@ public class GerenciamentoController extends HttpServlet {
             return;
         }
 
-        CadastroProdutosDAO dao = new CadastroProdutosDAO();
+        CadastroItemDAO dao = new CadastroItemDAO();
         boolean sucesso = dao.excluir(codigoBarras);
 
         response.setContentType("application/json");

@@ -10,7 +10,7 @@ async function carregarEstoque() {
             const linha = `
                 <tr>
                     <td>${item.codigoBarras}</td>
-                    <td>${item.nomeProduto}</td>
+                    <td>${item.nomeItem}</td>
                     <td>${item.fabricante}</td>
                     <td>${item.marca}</td>
                     <td>${item.dataFabricacao}</td>

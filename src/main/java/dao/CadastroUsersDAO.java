@@ -7,18 +7,17 @@ import util.SenhaUtil;
 
 
 public class CadastroUsersDAO {
-    
+
     public boolean cadastrar(CadastroUsuarioModel user) {
         String sql = "INSERT INTO users " +
                     "(username, psw, nameFirst, sobreNome, matricula, cpf, sexo, dtaNascimento, email ,telefone, funcao, cep, endereco, numero, complemento, bairro, cidade, estado)"+
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        try (var con = connection.ConnectionFactory.getConnection()) {
-            
-            PreparedStatement stmt = con.prepareStatement(sql);
-            
+
+        try (var con = connection.ConnectionFactory.getConnection();
+            PreparedStatement stmt = con.prepareStatement(sql)) {
+
             String senhaHash = SenhaUtil.gerarHash(user.getSenha());
-            
+
             stmt.setString(1, user.getNomeUsuario());
             stmt.setString(2, senhaHash);
             stmt.setString(3, user.getNome());
@@ -37,9 +36,9 @@ public class CadastroUsersDAO {
             stmt.setString(16, user.getBairro());
             stmt.setString(17, user.getCidade());
             stmt.setString(18, user.getEstado());
-            
+
             stmt.executeUpdate();
-            
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();

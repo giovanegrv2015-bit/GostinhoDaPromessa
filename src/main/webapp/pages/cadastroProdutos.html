@@ -28,8 +28,8 @@
                         <input type="text" name="codigoBarras" id="codigoBarras" required />
                     </div>
                     <div class="grupo-form">
-                        <label for="nomeProduto" >Nome do Produto</label>
-                        <input type="text" name="nomeProduto" id="nomeProduto" required />
+                        <label for="nomeItem" >Nome do Item</label>
+                        <input type="text" name="nomeItem" id="nomeItem" required />
                     </div>
                     </div>
 
@@ -79,6 +79,34 @@
                                 <option value="entrada">Entrada</option>
                                 <option value="saida">Saída</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label for="local">Local de Armazenamento</label>
+                            <select name="local" id="local" required>
+                                <option value="">Selecione o Local</option>
+                                <option value="Freezer">Freezer</option>
+                                <option value="Refrigerador">Refrigerador</option>
+                                <option value="Prateleira">Prateleira</option>
+                            </select>
+                        </div>
+                        <div class="grupo-form">
+                            <label for="categoria">Categoria</label>
+                            <select name="categoria" id="categoria" required>
+                                <option value="">Selecione a categoria</option>
+                                <option value="Matéria Prima">Matéria Prima</option>
+                                <option value="Produto Final">Produto Final</option>
+                                <option value="Embalagens">Embalagens</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="linha=forma">
+                        <div class="grupo-form">
+                            <label for="estoqueMinimo">Estoque Mínimo</label>
+                            <input type="number" name="estoqueMinimo" id="estoqueMinimo" min="0" placeholder="Qtd. mínima do alerta" required/>
                         </div>
                     </div>
 

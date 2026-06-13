@@ -1,10 +1,12 @@
+//adicao da variavel estoque, local, categoria e estoqueMinimo
+
 package model;
 
-public class CadastroProdutoModel {
+public class CadastroItemModel {
     
     private int id;
     private String codigoBarras;
-    private String nomeProduto;
+    private String nomeItem;
     private String fabricante;
     private String marca;
     private String dataFabricacao;
@@ -13,19 +15,11 @@ public class CadastroProdutoModel {
     private String valor;
     private String total;
     private String status;
-    private String estoque;
-    
-    
-    public CadastroProdutoModel() {
-        
-    }
-    
-    public String getEstoque() {
-        return estoque;
-    }
+    private String local;
+    private String categoria;
+    private long estoqueMinimo;
 
-    public void setEstoque(String estoque) {
-        this.estoque = estoque;
+    public CadastroItemModel() {
     }
 
     public String getCodigoBarras() {
@@ -36,12 +30,12 @@ public class CadastroProdutoModel {
         this.codigoBarras = codigoBarras;
     }
 
-    public String getNomeProduto() {
-        return nomeProduto;
+    public String getNomeItem() {
+        return nomeItem;
     }
 
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
+    public void setNomeItem(String nomeItem) {
+        this.nomeItem = nomeItem;
     }
 
     public String getFabricante() {
@@ -99,12 +93,36 @@ public class CadastroProdutoModel {
     public void setTotal(String total) {
         this.total = total;
     }
-    
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getLocal() {
+        return local;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public long getEstoqueMinimo() {
+        return estoqueMinimo;
+    }
+
+    public void setEstoqueMinimo(long estoqueMinimo) {
+        this.estoqueMinimo = estoqueMinimo;
     }
 }

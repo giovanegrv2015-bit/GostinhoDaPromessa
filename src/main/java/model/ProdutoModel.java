@@ -1,117 +1,119 @@
-package model;
+// CLASSE NAO UTILIZADA, nao esta sendo chamada/importada em nenhum outro lugar, nao vou apagar mas deixarei aqui.
 
-public class ProdutoModel {
-    
-    private int id;
-    private String codigoBarras;
-    private String nomeProduto;
-    private String fabricante;
-    private String marca;
-    private String dataFabricacao;
-    private String dataVencimento;
-    private long quantidade;
-    private String valor;
-    private String total;
-    private String status;
-    private String estoque;
-    
-    public ProdutoModel() {
-        
-    }
+//package model;
 
-    public int getId() {
-        return id;
-    }
+//public class ProdutoModel {
 
-    public void setId(int id) {
-        this.id = id;
-    }
+//    private int id;
+//  private String codigoBarras;
+//  private String nomeItem;
+//  private String fabricante;
+//  private String marca;
+//  private String dataFabricacao;
+//  private String dataVencimento;
+//  private long quantidade;
+//  private String valor;
+//  private String total;
+//  private String status;
+//  private String estoque;
 
-    public String getCodigoBarras() {
-        return codigoBarras;
-    }
+//  public ProdutoModel() {
 
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
-    }
+//  }
 
-    public String getNomeProduto() {
-        return nomeProduto;
-    }
+//  public int getId() {
+//        return id;
+//  }
 
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
-    }
+//    public void setId(int id) {
+//   this.id = id;
+//    }
 
-    public String getFabricante() {
-        return fabricante;
-    }
+//  public String getCodigoBarras() {
+//      return codigoBarras;
+//  }
 
-    public void setFabricante(String fabricante) {
-        this.fabricante = fabricante;
-    }
+//  public void setCodigoBarras(String codigoBarras) {
+//      this.codigoBarras = codigoBarras;
+// }
 
-    public String getMarca() {
-        return marca;
-    }
+            //  public String getNomeItem() {
+//      return nomeItem;
+//  }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
+//    public void setNomeItem(String nomeItem) {
+//      this.nomeItem = nomeItem;
+//    }
 
-    public String getDataFabricacao() {
-        return dataFabricacao;
-    }
+//  public String getFabricante() {
+//      return fabricante;
+//   }
 
-    public void setDataFabricacao(String dataFabricacao) {
-        this.dataFabricacao = dataFabricacao;
-    }
+            //  public void setFabricante(String fabricante) {
+//     this.fabricante = fabricante;
+//  }
 
-    public String getDataVencimento() {
-        return dataVencimento;
-    }
+//  public String getMarca() {
+//      return marca;
+//  }
 
-    public void setDataVencimento(String dataVencimento) {
-        this.dataVencimento = dataVencimento;
-    }
+//  public void setMarca(String marca) {
+//      this.marca = marca;
+//  }
 
-    public long getQuantidade() {
-        return quantidade;
-    }
+//  public String getDataFabricacao() {
+//      return dataFabricacao;
+//  }
 
-    public void setQuantidade(long quantidade) {
-        this.quantidade = quantidade;
-    }
+//  public void setDataFabricacao(String dataFabricacao) {
+//      this.dataFabricacao = dataFabricacao;
+//  }
 
-    public String getValor() {
-        return valor;
-    }
+//  public String getDataVencimento() {
+//      return dataVencimento;
+//  }
 
-    public void setValor(String valor) {
-        this.valor = valor;
-    }
+//  public void setDataVencimento(String dataVencimento) {
+//      this.dataVencimento = dataVencimento;
+//  }
 
-    public String getTotal() {
-        return total;
-    }
+//  public long getQuantidade() {
+//      return quantidade;
+//  }
 
-    public void setTotal(String total) {
-        this.total = total;
-    }
+//  public void setQuantidade(long quantidade) {
+//      this.quantidade = quantidade;
+//  }
 
-    public String getStatus() {
-        return status;
-    }
+//  public String getValor() {
+//      return valor;
+//  }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+//  public void setValor(String valor) {
+//      this.valor = valor;
+//  }
 
-    public String getEstoque() {
-        return estoque;
-    }
+//  public String getTotal() {
+//      return total;
+//  }
 
-    public void setEstoque(String estoque) {
-        this.estoque = estoque;
-    }
-}
+//  public void setTotal(String total) {
+//      this.total = total;
+//  }
+
+//  public String getStatus() {
+//      return status;
+//  }
+
+//  public void setStatus(String status) {
+//      this.status = status;
+//  }
+
+//  public String getEstoque() {
+//      return estoque;
+//  }
+
+//  public void setEstoque(String estoque) {
+//  this.estoque = estoque;
+//  }
+//}

@@ -1,14 +1,14 @@
 package controller;
 
 import com.google.gson.Gson;
-import dao.CadastroProdutosDAO;
+import dao.CadastroItemDAO;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import model.CadastroProdutoModel;
+import model.CadastroItemModel;
 
 @WebServlet("/api/estoque")
 public class EstoqueController extends HttpServlet{
@@ -20,8 +20,8 @@ public class EstoqueController extends HttpServlet{
         String tipo = request.getParameter("tipo");        
         String data = request.getParameter("data");       
 
-        CadastroProdutosDAO dao = new CadastroProdutosDAO();
-            List<CadastroProdutoModel> lista = dao.listarComFiltro(nome, tipo, data);
+        CadastroItemDAO dao = new CadastroItemDAO();
+            List<CadastroItemModel> lista = dao.listarComFiltro(nome, tipo, data);
             
             String json = new Gson().toJson(lista);
             

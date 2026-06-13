@@ -7,17 +7,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.CadastroProdutoModel;
+import model.CadastroItemModel;
 
-public class CadastroProdutosDAO {
-    public boolean salvar(CadastroProdutoModel produto){
+public class CadastroItemDAO {
+    public boolean salvar(CadastroItemModel produto){
         String sql = "INSERT INTO produtos "+
                      "(codigo_barras, nome_produto, fabricante, marca, data_fabricacao, data_vencimento, quantidade, valor, total, status) "+
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1, produto.getCodigoBarras());
-            stmt.setString(2, produto.getNomeProduto());
+            stmt.setString(2, produto.getNomeItem());
             stmt.setString(3, produto.getFabricante());
             stmt.setString(4, produto.getMarca());
             stmt.setDate(5, java.sql.Date.valueOf(produto.getDataFabricacao()));
@@ -36,8 +36,8 @@ public class CadastroProdutosDAO {
         }           
     }
     
-    public List<CadastroProdutoModel> listarComFiltro(String nome, String tipo, String data) {
-        List<CadastroProdutoModel> lista = new ArrayList<>();
+    public List<CadastroItemModel> listarComFiltro(String nome, String tipo, String data) {
+        List<CadastroItemModel> lista = new ArrayList<>();
         
         StringBuilder sql = new StringBuilder( "SELECT * FROM produtos WHERE 1=1");
 
@@ -68,10 +68,10 @@ public class CadastroProdutosDAO {
             ResultSet rs = stmt.executeQuery();
             
             while (rs.next()){
-                CadastroProdutoModel p = new CadastroProdutoModel();
+                CadastroItemModel p = new CadastroItemModel();
                 
                 p.setCodigoBarras(rs.getString("codigo_barras"));
-                p.setNomeProduto(rs.getString("nome_produto"));
+                p.setNomeItem(rs.getString("nome_produto"));
                 p.setFabricante(rs.getString("fabricante"));
                 p.setMarca(rs.getString("marca"));
                 p.setDataFabricacao(rs.getDate("data_fabricacao").toLocalDate().toString());
@@ -80,7 +80,6 @@ public class CadastroProdutosDAO {
                 p.setValor(rs.getString("valor"));
                 p.setTotal(rs.getString("total"));
                 p.setStatus(rs.getString("status"));
-                p.setEstoque(rs.getString("estoque"));
                 
                 lista.add(p);
             }
@@ -90,7 +89,7 @@ public class CadastroProdutosDAO {
         return lista;
     }
     
-    public boolean atualizar(CadastroProdutoModel produto) {
+    public boolean atualizar(CadastroItemModel produto) {
         String sql = "UPDATE produtos SET " +
                     "nome_produto = ?, fabricante = ?, marca " +
                     "data_fabricacao = ?, data_vencimento = ?, " +
@@ -100,7 +99,7 @@ public class CadastroProdutosDAO {
                     try (Connection conn = ConnectionFactory.getConnection();
                             PreparedStatement stmt = conn.prepareStatement(sql)) {
                         
-                        stmt.setString(1, produto.getNomeProduto());
+                        stmt.setString(1, produto.getNomeItem());
                         stmt.setString(2, produto.getFabricante());
                         stmt.setString(3, produto.getMarca());
                         stmt.setDate(4, java.sql.Date.valueOf(produto.getDataFabricacao()));
@@ -109,7 +108,6 @@ public class CadastroProdutosDAO {
                         stmt.setString(7, produto.getValor());
                         stmt.setString(8, produto.getTotal());
                         stmt.setString(9, produto.getStatus());
-                        stmt.setString(10, produto.getEstoque());
                         
                         stmt.setString(1, produto.getCodigoBarras());
                         
