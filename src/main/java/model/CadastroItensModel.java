@@ -2,7 +2,7 @@
 
 package model;
 
-public class CadastroItemModel {
+public class CadastroItensModel {
     
     private int id;
     private String codigoBarras;
@@ -19,7 +19,7 @@ public class CadastroItemModel {
     private String categoria;
     private long estoqueMinimo;
 
-    public CadastroItemModel() {
+    public CadastroItensModel() {
     }
 
     public String getCodigoBarras() {

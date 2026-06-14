@@ -25,7 +25,7 @@ create table users (
 create table itens (
         id int auto_increment primary key,
         codigo_barras varchar(100) not null,
-        nome_produto varchar(100) not null,
+        nome_item varchar(100) not null,
         fabricante varchar(100),
         marca varchar(100),
         data_fabricacao date,

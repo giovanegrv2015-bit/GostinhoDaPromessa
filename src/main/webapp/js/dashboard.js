@@ -5,7 +5,7 @@ async function carregarEstoque() {
 
         const tabela = document.getElementById("corpoTabela");
         tabela.innerHTML = "";
-        console.log("Chegou aqui.");
+
         dados.forEach(item => {
             const linha = `
                 <tr>
@@ -24,7 +24,7 @@ async function carregarEstoque() {
             tabela.innerHTML += linha;    
         });
     } catch (erro) {
-        console.log("Erro ao carregar os produtos.", erro);
+        console.log("Erro ao carregar os itens.", erro);
     }
 }
 

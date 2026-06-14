@@ -4,11 +4,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.CadastroItemModel;
+import model.CadastroItensModel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import com.google.gson.Gson;
-import dao.CadastroItemDAO;
+import dao.CadastroItensDAO;
 
 @WebServlet("/api/gerenciamento")
 public class GerenciamentoController extends HttpServlet {
@@ -32,21 +32,21 @@ public class GerenciamentoController extends HttpServlet {
             }
         }
 
-        CadastroItemModel produto = new Gson().fromJson(sb.toString(), CadastroItemModel.class);
-        produto.setCodigoBarras(codigoBarras);
+        CadastroItensModel item = new Gson().fromJson(sb.toString(), CadastroItensModel.class);
+        item.setCodigoBarras(codigoBarras);
         
-        CadastroItemDAO dao = new CadastroItemDAO();
-        boolean sucesso = dao.atualizar(produto);
+        CadastroItensDAO dao = new CadastroItensDAO();
+        boolean sucesso = dao.atualizar(item);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         if(sucesso){
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write("{\"mensagem\":\"Produto atualizado com sucesso\"}");
+            response.getWriter().write("{\"mensagem\":\"Item atualizado com sucesso\"}");
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("{\"erro\":\"Falha ao atualizar o produto\"}");
+            response.getWriter().write("{\"erro\":\"Falha ao atualizar o item\"}");
         }
 
     }
@@ -62,7 +62,7 @@ public class GerenciamentoController extends HttpServlet {
             return;
         }
 
-        CadastroItemDAO dao = new CadastroItemDAO();
+        CadastroItensDAO dao = new CadastroItensDAO();
         boolean sucesso = dao.excluir(codigoBarras);
 
         response.setContentType("application/json");
@@ -70,10 +70,10 @@ public class GerenciamentoController extends HttpServlet {
 
         if(sucesso) {
             response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write("{\"mensagem\":\"Produto excluído com sucesso\"}");
+            response.getWriter().write("{\"mensagem\":\"Item excluído com sucesso\"}");
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("{\"erro\":\"Falha ao excluir o produto\"}");
+            response.getWriter().write("{\"erro\":\"Falha ao excluir o item\"}");
         }
     }
     

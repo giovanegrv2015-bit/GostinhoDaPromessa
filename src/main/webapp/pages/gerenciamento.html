@@ -23,16 +23,16 @@
         </header>
 
         <main>
-            <section id="secaoProdutos">
+            <section id="secaoItens">
                 <div class="secao-topo">
-                    <h2 class="secao-titulo">Produtos em Estoque</h2>
+                    <h2 class="secao-titulo">Itens em Estoque</h2>
                     <div class="barra-acoes">
-                        <input type="text" id="buscarGerenciamento" class="input-busca" placeholder="Buscar produto pelo nome">
-                        <a href="cadastroProdutos.html" class="btn-novo-produto">Novo Produto</a>
+                        <input type="text" id="buscarGerenciamento" class="input-busca" placeholder="Buscar item pelo nome">
+                        <a href="cadastroItens.html" class="btn-novo-item">Novo Item</a>
                     </div>
                 </div>
-                <div id="listaProdutos" class="lista-produto">
-                    <div class="loading-msg" id="loadingMsg">Carregando produtos</div>
+                <div id="listaItens" class="lista-item">
+                    <div class="loading-msg" id="loadingMsg">Carregando Itens</div>
                 </div>
             </section>
         </main>
@@ -40,13 +40,13 @@
         <div id="modalOverlay" class="modal-overlay" style="display:none;">
             <div class="modal">
                 <div class="modal-header">
-                    <h3 id="modalTitulo">Editar Produto</h3>
+                    <h3 id="modalTitulo">Editar Item</h3>
                     <button class="modal-fechar" id="btnFecharModal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="linha-form">
                         <div class="grupo-form">
-                            <label>Nome do Produto</label>
+                            <label>Nome do Item</label>
                             <input type="text" id="modal-nomeItem"/>
                         </div>
                     </div>
@@ -93,10 +93,34 @@
                             </select>
                         </div>
                     </div>
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label>Local de Armazenamento</label>
+                            <select id="modal-local">
+                                <option value="Freezer">Freezer</option>
+                                <option value="Refrigerador">Refrigerador</option>
+                                <option value="Prateleira">Prateleira</option>
+                            </select>
+                        </div>
+                        <div class="grupo-form">
+                            <label>Categoria</label>
+                            <select id="modal-categoria">
+                                <option value="Matéria Prima">Matéria Prima</option>
+                                <option value="Produto final">Produto final</option>
+                                <option value="Embalagens">Embalagens</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="linha-form">
+                        <div class="grupo-form">
+                            <label>Estoque Mínimo</label>
+                            <input type="number" id="modal-estoqueMinimo" min="0"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button id="btnSalvarEdicao" class="btn-salvar">Salvar Alterações</button>
-                    <button id="btnExcluirProduto" class="btn-excluir">Excluir Produto</button>
+                    <button id="btnExcluirItem" class="btn-excluir">Excluir Item</button>
                     <button id="btnCancelarModal" class="btn-cancelar">Cancelar</button>
                 </div>
             </div>

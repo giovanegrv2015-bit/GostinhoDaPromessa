@@ -15,6 +15,7 @@ import java.util.Map;
 
 @WebServlet("/api/resumo")
 public class ResumoEstoqueController extends HttpServlet {
+
      protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         
@@ -22,8 +23,9 @@ public class ResumoEstoqueController extends HttpServlet {
                       SELECT
                           SUM(CASE WHEN status = 'entrada' THEN quantidade ELSE 0 END) AS entrada,
                           SUM(CASE WHEN status = 'saida' THEN quantidade ELSE 0 END) AS saida
-                      FROM produtos
+                      FROM itens
                       """;
+
          try (Connection conn = ConnectionFactory.getConnection();
               PreparedStatement stmt = conn.prepareStatement(sql);
               ResultSet rs = stmt.executeQuery()){
@@ -46,7 +48,9 @@ public class ResumoEstoqueController extends HttpServlet {
             String json = new Gson().toJson(resultado);
             
             response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
+
          } catch (Exception e) {
               e.printStackTrace();
          }
