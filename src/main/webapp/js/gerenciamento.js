@@ -169,6 +169,28 @@ async function salvarAlteracoes() {
     }
 }
 
+async function excluirItem(codigoBarras) {
+    if (!codigoBarras) return;
+    if (!confirm("Tem certeza que deseja excluir este item?")) return;
+
+    try{
+        const response = await fetch(
+            `${BASE_GERENCIAMENTO}?codigoBarras=${encodeURIComponent(codigoBarras)}`,
+            {method: "DELETE"}
+        );
+
+        if (response.ok) {
+            fecharModal();
+            carregarItens();
+        } else {
+            alert("Erro ao excluir o item. Tente novamente.");
+        }
+    } catch (erro) {
+        console.error("Erro na função delete:", erro);
+        alert("Falha de conexão ao excluir.");
+    }
+}
+
 function emitirNotaCompra(codigoBarras) {
     const item = itensAtuais.find(i => i.codigoBarras === codigoBarras);
     if(!item) return;

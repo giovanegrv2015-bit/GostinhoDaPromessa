@@ -11,15 +11,7 @@ async function filtroEstoque() {
         const tabela = document.getElementById("corpoTabela");
         tabela.innerHTML = "";
 
-        const filtrados = dados.filter(item => {
-            const matchNome = nome === "" ||item.nomeItem.toLowerCase().includes(nome);
-            const matchTipo = tipo === "" || item.status === tipo;
-            const matchData = data === "" || item.dataFabricacao === data;
-
-            return matchNome && matchTipo && matchData;
-        });
-
-        filtrados.forEach(item =>{
+        dados.forEach(item =>{
             const linha = `
             <tr>
                 <td>${item.codigoBarras}</td>

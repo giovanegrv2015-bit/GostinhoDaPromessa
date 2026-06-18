@@ -6,7 +6,7 @@ async function validarLogin() {
         console.log("PERFIL FRONT: ", dado.perfil);
 
         if(!dado.perfil || dado.perfil.toLowerCase() !== "admin") {
-            document.getElementsByClassName(".btn-menu").style.display = "none";
+            document.querySelectorAll(".btn-menu").forEach(btn => { btn.style.display = "none"; });
         }
     } catch (e) {
         console.error("Erro ao veriricar o perfil.", e);   

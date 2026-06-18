@@ -11,6 +11,7 @@
     /* Neutros */
     --white: #ffffff; /* fundo containers*/
     --gray-light: #f5f5f5; /* fundo da pagina, body */
+    --gray-medium: #cccccc;
     --gray-dark: #333333; /* cor auxiliar para bordas de imput */
 
     /* Sombra */

@@ -112,6 +112,22 @@ body {
     border-color: var(--primary-medium); 
 }
 
+.btn-add {
+    background-color: var(--success);
+    color: var(--white);
+    text-decoration: none;
+    padding: 9px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.btn-add:hover {
+    background-color: var(--success-hover);
+}
+
 .botao-pesquisa,
 .btn-pesquisa {
     padding: 10px 20px;

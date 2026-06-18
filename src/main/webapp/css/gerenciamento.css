@@ -59,7 +59,7 @@ body {
 
 .secao-topo {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
@@ -74,8 +74,9 @@ body {
 
 .barra-acoes {
     display: flex;
-    gap: 12px;
+    justify-content: center;
     align-items: center;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
