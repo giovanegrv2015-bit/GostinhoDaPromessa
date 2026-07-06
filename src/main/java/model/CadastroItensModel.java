@@ -22,6 +22,14 @@ public class CadastroItensModel {
     public CadastroItensModel() {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getCodigoBarras() {
         return codigoBarras;
     }
@@ -62,28 +70,12 @@ public class CadastroItensModel {
         this.dataFabricacao = dataFabricacao;
     }
 
-    public String getDataVencimento() {
-        return dataVencimento;
-    }
-
-    public void setDataVencimento(String dataVencimento) {
-        this.dataVencimento = dataVencimento;
-    }
-
     public long getQuantidade() {
         return quantidade;
     }
 
     public void setQuantidade(long quantidade) {
         this.quantidade = quantidade;
-    }
-
-    public String getValor() {
-        return valor;
-    }
-
-    public void setValor(String valor) {
-        this.valor = valor;
     }
 
     public String getTotal() {
@@ -102,6 +94,22 @@ public class CadastroItensModel {
         this.status = status;
     }
 
+    public String getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(String dataVencimento) {
+        this.dataVencimento = dataVencimento;
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+
     public String getLocal() {
         return local;
     }
@@ -110,19 +118,19 @@ public class CadastroItensModel {
         this.local = local;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
     public long getEstoqueMinimo() {
         return estoqueMinimo;
     }
 
     public void setEstoqueMinimo(long estoqueMinimo) {
         this.estoqueMinimo = estoqueMinimo;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }

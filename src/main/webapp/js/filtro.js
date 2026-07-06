@@ -4,7 +4,7 @@ async function filtroEstoque() {
         const tipo = document.getElementById("tipoMovimentacao").value;
         const data = document.getElementById("filtroData").value;
 
-        const url = `http://localhost:8080/api/estoque?nome=${encodeURIComponent(nome)}&tipo=${encodeURIComponent(tipo)}&data=${encodeURIComponent(data)}`;
+        const url = `/api/estoque?nome=${encodeURIComponent(nome)}&tipo=${encodeURIComponent(tipo)}&data=${encodeURIComponent(data)}`;
         const response = await fetch(url);
         const dados = await response.json();
 

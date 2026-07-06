@@ -14,7 +14,7 @@ public class CadastroUsuarioModel {
     private String funcao;
     private String cep;
     private String endereco;
-    private long numero;
+    private String numero;
     private String complemento;
     private String bairro;
     private String cidade;
@@ -118,11 +118,11 @@ public class CadastroUsuarioModel {
         this.endereco = endereco;
     }
 
-    public long getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(long numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 

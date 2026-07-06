@@ -74,6 +74,7 @@ public class CadastroItensDAO {
                 while (rs.next()) {
                     CadastroItensModel i = new CadastroItensModel();
 
+                    i.setId(rs.getInt("id"));
                     i.setCodigoBarras(rs.getString("codigo_barras"));
                     i.setNomeItem(rs.getString("nome_item"));
                     i.setFabricante(rs.getString("fabricante"));
@@ -103,7 +104,7 @@ public class CadastroItensDAO {
                     "data_fabricacao = ?, data_vencimento = ?, " +
                     "quantidade = ?, valor = ?, total = ?, status = ?," +
                     "local = ?, categoria = ?, estoque_minimo = ? " +
-                    "WHERE codigo_barras = ? ";
+                    "WHERE id = ? ";
         
                     try (Connection conn = ConnectionFactory.getConnection();
                             PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -120,8 +121,8 @@ public class CadastroItensDAO {
                         stmt.setString(10, item.getLocal());
                         stmt.setString(11, item.getCategoria());
                         stmt.setLong(12, item.getEstoqueMinimo());
-                        
-                        stmt.setString(13, item.getCodigoBarras());
+
+                        stmt.setInt(13, item.getId());
                         
                         int linhasAfetadas = stmt.executeUpdate();
                         return linhasAfetadas > 0;
@@ -132,13 +133,13 @@ public class CadastroItensDAO {
                     }
     }
     
-    public boolean excluir(String codigoBarras) {
-        String sql = "DELETE FROM itens WHERE codigo_barras = ?";
+    public boolean excluir(int id) {
+        String sql = "DELETE FROM itens WHERE id = ?";
         
         try (Connection conn = ConnectionFactory.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            stmt.setString(1, codigoBarras);
+            stmt.setInt(1, id);
             int linhasAfetadas = stmt.executeUpdate();
             return linhasAfetadas > 0;
 

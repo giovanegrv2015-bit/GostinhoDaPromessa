@@ -113,33 +113,41 @@ body {
 }
 
 .btn-add {
+    display: inline-flex; 
+    align-items: center;      
+    justify-content: center;  
+    padding: 10px 20px;
+    font-size: 16px;          
+    font-family: inherit;     
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
     background-color: var(--success);
     color: var(--white);
-    text-decoration: none;
-    padding: 9px 18px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 14px;
-    transition: 0.2s;
-    white-space: nowrap;
+    border-radius: 100px;
+    cursor: pointer;
 }
 
 .btn-add:hover {
     background-color: var(--success-hover);
 }
 
-.botao-pesquisa,
 .btn-pesquisa {
+    display: inline-flex; 
+    align-items: center;      
+    justify-content: center;  
     padding: 10px 20px;
+    font-size: 16px;          
+    font-family: inherit;     
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
     background-color: var(--primary-medium);
     color: var(--white);
-    border: none;
     border-radius: 100px;
     cursor: pointer;
-    transition: background-color 0.2s;
 }
 
-.botao-pesquisa:hover,
 .btn-pesquisa:hover {
     background-color: var(--primary-dark);
 }

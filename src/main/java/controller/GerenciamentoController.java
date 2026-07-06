@@ -16,11 +16,14 @@ public class GerenciamentoController extends HttpServlet {
     protected void doPut(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         
-        String codigoBarras = request.getParameter("codigoBarras");
+        String idParam = request.getParameter("id");
 
-        if(codigoBarras == null || codigoBarras.isEmpty()){
+        int id;
+        try {
+            id = Integer.parseInt(idParam);
+        }catch (NumberFormatException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("{\"erro\":\"codigoBarras é obrigatório\"}");
+            response.getWriter().write("{\"erro\":\"id é obrigatório e deve ser numérico\"}");
             return;
         }
 
@@ -33,7 +36,7 @@ public class GerenciamentoController extends HttpServlet {
         }
 
         CadastroItensModel item = new Gson().fromJson(sb.toString(), CadastroItensModel.class);
-        item.setCodigoBarras(codigoBarras);
+        item.setId(id);
         
         CadastroItensDAO dao = new CadastroItensDAO();
         boolean sucesso = dao.atualizar(item);
@@ -54,16 +57,19 @@ public class GerenciamentoController extends HttpServlet {
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
     throws IOException {
 
-        String codigoBarras = request.getParameter("codigoBarras");
+        String idParam = request.getParameter("id");
 
-        if(codigoBarras == null || codigoBarras.isEmpty()) {
+        int id;
+        try {
+            id = Integer.parseInt(idParam);
+        } catch (NumberFormatException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("{\"erro\":\"codigobarras é obrigatório\"}");
+            response.getWriter().write("{\"erro\":\"id é obrigatório e deve ser numérico\"}");
             return;
         }
 
         CadastroItensDAO dao = new CadastroItensDAO();
-        boolean sucesso = dao.excluir(codigoBarras);
+        boolean sucesso = dao.excluir(id);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

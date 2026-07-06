@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="../css/reset.css" />
         <link rel="stylesheet" href="../css/color.css" />
         <link rel="stylesheet" href="../css/cadastroItens.css"/>
+        <link rel="stylesheet" href="../css/mensagens.css" />
         <title>Cadastro de Item</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,22 +26,22 @@
                     <div class="linha-form">
                     <div class="grupo-form">
                         <label for="codigoBarras">Código de Barras</label>
-                        <input type="text" name="codigoBarras" id="codigoBarras" required />
+                        <input type="text" title="USE APENAS NÚMEROS!" name="codigoBarras" id="codigoBarras" placeholder="Digite o código de barras aqui:" required />
                     </div>
                     <div class="grupo-form">
                         <label for="nomeItem" >Nome do Item</label>
-                        <input type="text" name="nomeItem" id="nomeItem" required />
+                        <input type="text" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" name="nomeItem" id="nomeItem" placeholder="Digite o nome do item aqui:" required />
                     </div>
                     </div>
 
                     <div class="linha-form">
                     <div class="grupo-form">
                         <label for="fabricante" >Fabricante</label>
-                        <input type="text" name="fabricante" id="fabricante" required />
+                        <input type="text" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" name="fabricante" id="fabricante" placeholder="Digite o nome do fabricante aqui:" required />
                     </div>
                     <div class="grupo-form">
                         <label for="marca" >Marca</label>
-                        <input type="text" name="marca" id="marca" required />
+                        <input type="text" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" name="marca" id="marca" placeholder="Digite o nome da marca aqui:" required />
                     </div>
                     </div>
 
@@ -64,7 +65,7 @@
 
                         <div class="grupo-form">
                             <label for="valor" >Valor Unitário</label>
-                            <input type="number" name="valor" id="valor" step="0.01" required/>
+                            <input type="number" name="valor" id="valor" step="0.01" min="0.01" required/>
                         </div>
                     </div>
 
@@ -106,7 +107,7 @@
                     <div class="linha-form">
                         <div class="grupo-form">
                             <label for="estoqueMinimo">Estoque Mínimo</label>
-                            <input type="number" name="estoqueMinimo" id="estoqueMinimo" min="0" placeholder="Qtd. mínima do alerta" required/>
+                            <input type="number" title="USE APENAS NÚMEROS!" name="estoqueMinimo" id="estoqueMinimo" min="0" placeholder="Qtd. mínima do alerta" required/>
                         </div>
                     </div>
 
@@ -118,5 +119,6 @@
             </section>
         </main>
         <script src="../js/cadastroItens.js"></script>
+        <script src="../js/mensagens.js"></script>
     </body>
 </html>

@@ -1,6 +1,13 @@
+(function avisoAcessoNegado() {
+    const params = new URLSearchParams(window.location.search);
+    if(params.get("acesso") === "negado") {
+        alert("Você não tem permissao para acessar essa página.");
+    }
+})();
+
 async function carregarEstoque() {
     try {
-        const response = await fetch("http://localhost:8080/api/estoque");
+        const response = await fetch("/api/estoque");
         const dados = await response.json();
 
         const tabela = document.getElementById("corpoTabela");
@@ -30,7 +37,7 @@ async function carregarEstoque() {
 
 async function carregarResumo() {
     try{
-        const response = await fetch("http://localhost:8080/api/resumo");
+        const response = await fetch("/api/resumo");
         const dados = await response.json();
         
         document.getElementById("cardEntrada").innerHTML = dados.entrada;

@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
             
             response.sendRedirect(request.getContextPath() + "/pages/dashboard.html");
         }else {
-            response.sendRedirect(request.getContextPath() + "/index.html");
+            response.sendRedirect(request.getContextPath() + "/index.html?erro=login_invalido");
         }
     }
     

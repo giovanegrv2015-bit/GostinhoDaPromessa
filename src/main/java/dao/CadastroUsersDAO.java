@@ -31,7 +31,7 @@ public class CadastroUsersDAO {
             stmt.setString(11, user.getFuncao());
             stmt.setString(12, user.getCep());
             stmt.setString(13, user.getEndereco());
-            stmt.setLong(14, user.getNumero());
+            stmt.setString(14, user.getNumero());
             stmt.setString(15, user.getComplemento());
             stmt.setString(16, user.getBairro());
             stmt.setString(17, user.getCidade());

@@ -7,14 +7,24 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 import model.CadastroUsuarioModel;
 
 @WebServlet("/pages/cadastro")
 public class CadastroController extends HttpServlet{
+
+    private static final Set<String> FUNCOES_VALIDAS = Set.of("ADMIN", "GERENTE", "FUNCIONARIO", "VISITANTE");
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
               throws ServletException, IOException {
-              
+
+        String funcao = request.getParameter("funcao");
+
+        if(funcao == null || !FUNCOES_VALIDAS.contains(funcao)) {
+            response.sendRedirect("cadastro.html?erro=funcao_invalida");
+            return;
+        }
+
         CadastroUsuarioModel user = new CadastroUsuarioModel();
         
         user.setNome(request.getParameter("nameFirst"));
@@ -27,16 +37,15 @@ public class CadastroController extends HttpServlet{
         user.setTelefone(request.getParameter("telefone"));
         user.setNomeUsuario(request.getParameter("usuario"));
         user.setSenha(request.getParameter("senha"));
-        user.setFuncao(request.getParameter("funcao"));
+        user.setFuncao(funcao);
         user.setCep(request.getParameter("cep"));
         user.setEndereco(request.getParameter("endereco"));
-        user.setNumero(Long.parseLong(request.getParameter("numero")));
+        user.setNumero(request.getParameter("numero"));
         user.setComplemento(request.getParameter("complemento"));
         user.setBairro(request.getParameter("bairro"));
         user.setCidade(request.getParameter("cidade"));
         user.setEstado(request.getParameter("estado"));
-        
-        
+
         CadastroUsersDAO dao = new CadastroUsersDAO();
         
         if(dao.cadastrar(user)) {

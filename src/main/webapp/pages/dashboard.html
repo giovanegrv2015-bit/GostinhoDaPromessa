@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/color.css" />
     <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/mensagens.css" />
     <title>Dashboard</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,9 +15,9 @@
         <nav id="menu">
             <ul class="menu-lista">
                 <li><a href="dashboard.html">Início</a></li>
-                <li><a href="gerenciamento.html">Gerenciamento</a></li>
-                <li><a href="cadastro.html" class="btn-menu">Cadastro</a></li>
-                <li><a href="#" id="btnLogout" class="btn-menu">Sair</a></li>
+                <li><a href="gerenciamento.html" class="btn-app">Gerenciamento</a></li>
+                <li><a href="cadastro.html" id="btnCadastroFuncionario" class="btn-app">Cadastro</a></li>
+                <li><a href="#" id="btnLogout">Sair</a></li>
             </ul>
         </nav>
     </header>
@@ -59,7 +60,7 @@
                 <button id="btnPesquisar" class="btn-pesquisa">Pesquisar</button>
             </div>
             <div class="topo-tabela">
-                <a href="cadastroItens.html" class="btn-add">Novo Item</a>
+                <a href="cadastroItens.html" class="btn-add btn-app">Novo Item</a>
             </div>
         </section>
         
@@ -105,5 +106,6 @@
     <script src="../js/filtro.js"></script>
     <script src="../js/validarLogin.js"></script>
     <script src="../js/logout.js"></script>
+    <script src="../js/mensagens.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-let codigoBarrasAtual = null;
+let idAtual = null;
 let itensAtuais = [];
 
 const BASE_URL = "/api/estoque";
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btnCancelarModal").addEventListener("click", fecharModal);
     document.getElementById("btnSalvarEdicao").addEventListener("click", salvarAlteracoes);
     document.getElementById("btnExcluirItem").addEventListener("click", () => {
-        excluirItem(codigoBarrasAtual);
+        excluirItem(idAtual);
     });
 
     document.getElementById("modalOverlay").addEventListener("click", (e) => {
@@ -69,7 +69,7 @@ async function carregarItens(busca = "") {
             const alertaHtml = estoqueBaixo ? `
                 <div class="alerta-reposicao">
                     Estoque baixo - reposicao necessária
-                    <button class="btn-nota" onclick="emitirNotaCompra('${item.codigoBarras}')">
+                    <button class="btn-nota" onclick="emitirNotaCompra(${item.id})">
                     Emitir Nota de Compra
                     </button>
                 </div>` : "";
@@ -88,18 +88,18 @@ async function carregarItens(busca = "") {
                 <span class="badge-status ${badgeClass}">${item.status}</span>
                 ${alertaHtml}
                 <div class="acoes-card">
-                <button class="btn-gerenciar" onclick="abrirModal('${item.codigoBarras}')">Editar</button>
+                <button class="btn-gerenciar" onclick="abrirModal(${item.id})">Editar</button>
                 </div>
                 `;
                 container.appendChild(card);
     });
 }
 
-function abrirModal(codigoBarras) {
-    const item = itensAtuais.find(i => i.codigoBarras === codigoBarras);
+function abrirModal(id) {
+    const item = itensAtuais.find(i => i.id === id);
     if(!item) return;
 
-    codigoBarrasAtual = item.codigoBarras;
+    idAtual = item.id;
 
     document.getElementById("modalTitulo").textContent = item.nomeItem;
     document.getElementById("modal-nomeItem").value = item.nomeItem;
@@ -120,7 +120,7 @@ function abrirModal(codigoBarras) {
 
 function fecharModal() {
     document.getElementById("modalOverlay").style.display = "none";
-    codigoBarrasAtual = null;
+    idAtual = null;
 }
 
 function calcularTotal() {
@@ -130,7 +130,7 @@ function calcularTotal() {
 }
 
 async function salvarAlteracoes() {
-    if(!codigoBarrasAtual) return;
+    if(!idAtual) return;
 
     const body = {
         nomeItem: document.getElementById("modal-nomeItem").value,
@@ -149,7 +149,7 @@ async function salvarAlteracoes() {
 
     try {
         const response = await fetch (
-        `${BASE_GERENCIAMENTO}?codigoBarras=${encodeURIComponent(codigoBarrasAtual)}`,
+        `${BASE_GERENCIAMENTO}?id=${encodeURIComponent(idAtual)}`,
         {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -169,13 +169,13 @@ async function salvarAlteracoes() {
     }
 }
 
-async function excluirItem(codigoBarras) {
-    if (!codigoBarras) return;
+async function excluirItem(id) {
+    if (!id) return;
     if (!confirm("Tem certeza que deseja excluir este item?")) return;
 
     try{
         const response = await fetch(
-            `${BASE_GERENCIAMENTO}?codigoBarras=${encodeURIComponent(codigoBarras)}`,
+            `${BASE_GERENCIAMENTO}?id=${encodeURIComponent(id)}`,
             {method: "DELETE"}
         );
 
@@ -191,8 +191,8 @@ async function excluirItem(codigoBarras) {
     }
 }
 
-function emitirNotaCompra(codigoBarras) {
-    const item = itensAtuais.find(i => i.codigoBarras === codigoBarras);
+function emitirNotaCompra(id) {
+    const item = itensAtuais.find(i => i.id === id);
     if(!item) return;
 
     const necessario = (item.estoqueMinimo * 2) - item.quantidade;
