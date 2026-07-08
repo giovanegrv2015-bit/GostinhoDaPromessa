@@ -1,10 +1,3 @@
-(function avisoAcessoNegado() {
-    const params = new URLSearchParams(window.location.search);
-    if(params.get("acesso") === "negado") {
-        alert("Você não tem permissao para acessar essa página.");
-    }
-})();
-
 async function carregarEstoque() {
     try {
         const response = await fetch("/api/estoque");

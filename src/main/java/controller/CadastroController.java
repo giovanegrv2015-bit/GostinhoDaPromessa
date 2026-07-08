@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Set;
 import model.CadastroUsuarioModel;
 
@@ -14,7 +16,8 @@ import model.CadastroUsuarioModel;
 public class CadastroController extends HttpServlet{
 
     private static final Set<String> FUNCOES_VALIDAS = Set.of("ADMIN", "GERENTE", "FUNCIONARIO", "VISITANTE");
-    
+    private static final LocalDate NASCIMENTO_MINIMO = LocalDate.of(1950, 1, 1);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
               throws ServletException, IOException {
 
@@ -22,6 +25,17 @@ public class CadastroController extends HttpServlet{
 
         if(funcao == null || !FUNCOES_VALIDAS.contains(funcao)) {
             response.sendRedirect("cadastro.html?erro=funcao_invalida");
+            return;
+        }
+
+        try {
+            LocalDate dtaNascimento = LocalDate.parse(request.getParameter("dtaNascimento"));
+            if (dtaNascimento.isBefore(NASCIMENTO_MINIMO) || dtaNascimento.isAfter(LocalDate.now())) {
+                response.sendRedirect("cadastro.html?erro=nascimento_invalido");
+                return;
+            }
+        } catch (DateTimeParseException | NullPointerException e) {
+            response.sendRedirect("cadastro.html?erro=nascimento_invalido");
             return;
         }
 

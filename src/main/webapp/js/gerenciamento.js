@@ -21,10 +21,25 @@ document.addEventListener("DOMContentLoaded", () => {
         excluirItem(idAtual);
     });
 
+    document.getElementById("modal-categoria").addEventListener("change", alternarCamposDataModal);
+
     document.getElementById("modalOverlay").addEventListener("click", (e) => {
         if (e.target === document.getElementById("modalOverlay")) fecharModal();
     });
 });
+
+function alternarCamposDataModal() {
+    const categoria = document.getElementById("modal-categoria").value;
+    const campoVencimento = document.getElementById("modal-dataVencimento");
+
+    const isEmbalagem = categoria === "Embalagens";
+
+    campoVencimento.disabled = isEmbalagem;
+
+    if (isEmbalagem) {
+        campoVencimento.value = "";
+    }
+}
 
 async function carregarItens(busca = "") {
 
@@ -115,6 +130,8 @@ function abrirModal(id) {
     document.getElementById("modal-categoria").value = item.categoria || '';
     document.getElementById("modal-estoqueMinimo").value = item.estoqueMinimo || 0;
 
+    alternarCamposDataModal();
+
     document.getElementById("modalOverlay").style.display = "flex";
 }
 
@@ -125,25 +142,64 @@ function fecharModal() {
 
 function calcularTotal() {
     const qtd = parseFloat(document.getElementById("modal-quantidade").value) || 0;
-    const valor = parseFloat(document.getElementById("modal-valor").value) || 0;
+    const valorTexto = document.getElementById("modal-valor").value.replace(",", ".");
+    const valor = parseFloat(valorTexto) || 0;
     document.getElementById("modal-total").value = (qtd * valor).toFixed(2);
 }
 
 async function salvarAlteracoes() {
     if(!idAtual) return;
 
+    const valorNormalizado = document.getElementById("modal-valor").value.replace(",", ".");
+    const valorNumerico = parseFloat(valorNormalizado);
+    const quantidadeNumerica = parseInt(document.getElementById("modal-quantidade").value);
+    const categoria = document.getElementById("modal-categoria").value;
+    const isEmbalagem = categoria === "Embalagens";
+    const dataFabricacao = document.getElementById("modal-dataFabricacao").value;
+    const dataVencimento = document.getElementById("modal-dataVencimento").value;
+
+    if (isNaN(valorNumerico) || valorNumerico <= 0) {
+        alert("O valor unitário deve ser maior que zero.");
+        return;
+    }
+
+    if (isNaN(quantidadeNumerica) || quantidadeNumerica < 0) {
+        alert("Preencha a quantidade corretamente.");
+        return;
+    }
+
+    const hoje = new Date().toISOString().split("T")[0];
+
+    if (!isEmbalagem) {
+        if (!dataFabricacao || !dataVencimento) {
+            alert("Preencha as datas de fabricação e vencimento.");
+            return;
+        }
+        if (dataFabricacao > hoje) {
+            alert("A data de fabricação não pode ser no futuro.");
+            return;
+        }
+        if (dataFabricacao > dataVencimento) {
+            alert("A data de fabricação não pode ser posterior à data de vencimento.");
+            return;
+        }
+    } else if (dataFabricacao && dataFabricacao > hoje) {
+        alert("A data de fabricação não pode ser no futuro.");
+        return;
+    }
+
     const body = {
         nomeItem: document.getElementById("modal-nomeItem").value,
         fabricante: document.getElementById("modal-fabricante").value,
         marca: document.getElementById("modal-marca").value,
-        dataFabricacao: document.getElementById("modal-dataFabricacao").value,
-        dataVencimento: document.getElementById("modal-dataVencimento").value,
-        quantidade: parseInt(document.getElementById("modal-quantidade").value),
-        valor: document.getElementById("modal-valor").value,
+        dataFabricacao: dataFabricacao || null,
+        dataVencimento: isEmbalagem ? null : dataVencimento,
+        quantidade : quantidadeNumerica,
+        valor : valorNormalizado,
         total: document.getElementById("modal-total").value,
         status: document.getElementById("modal-status").value,
         local: document.getElementById("modal-local").value,
-        categoria: document.getElementById("modal-categoria").value,
+        categoria: categoria,
         estoqueMinimo: parseInt(document.getElementById("modal-estoqueMinimo").value) || 0,
     };
 
@@ -161,7 +217,8 @@ async function salvarAlteracoes() {
         fecharModal();
         carregarItens();
         }else{
-        alert("Erro ao salvar as alterações. Tente novamente");
+            const erroBody = await response.json().catch(() => null);
+        alert(erroBody?.erro || "Erro ao salvar as alterações. Tente novamente");
         }
     }catch (erro) {
     console.error("Erro no put:", erro);

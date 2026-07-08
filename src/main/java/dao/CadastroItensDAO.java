@@ -21,8 +21,18 @@ public class CadastroItensDAO {
             stmt.setString(2, item.getNomeItem());
             stmt.setString(3, item.getFabricante());
             stmt.setString(4, item.getMarca());
-            stmt.setDate(5, java.sql.Date.valueOf(item.getDataFabricacao()));
-            stmt.setDate(6, java.sql.Date.valueOf(item.getDataVencimento()));
+
+            if (item.getDataFabricacao() == null || item.getDataFabricacao().isBlank()) {
+                stmt.setNull(5, java.sql.Types.DATE);
+            } else {
+                stmt.setDate(5, java.sql.Date.valueOf(item.getDataFabricacao()));
+            }
+            if (item.getDataVencimento() == null || item.getDataVencimento().isBlank()) {
+                stmt.setNull(6, java.sql.Types.DATE);
+            } else {
+                stmt.setDate(6, java.sql.Date.valueOf(item.getDataVencimento()));
+            }
+
             stmt.setLong(7, item.getQuantidade());
             stmt.setString(8, item.getValor());
             stmt.setString(9, item.getTotal());
@@ -79,8 +89,12 @@ public class CadastroItensDAO {
                     i.setNomeItem(rs.getString("nome_item"));
                     i.setFabricante(rs.getString("fabricante"));
                     i.setMarca(rs.getString("marca"));
-                    i.setDataFabricacao(rs.getDate("data_fabricacao").toLocalDate().toString());
-                    i.setDataVencimento(rs.getDate("data_vencimento").toLocalDate().toString());
+
+                    i.setDataFabricacao(rs.getDate("data_fabricacao") != null
+                            ? rs.getDate("data_fabricacao").toLocalDate().toString() : null);
+                    i.setDataVencimento(rs.getDate("data_vencimento") != null
+                            ? rs.getDate("data_vencimento").toLocalDate().toString() : null);
+
                     i.setQuantidade(rs.getLong("quantidade"));
                     i.setValor(rs.getString("valor"));
                     i.setTotal(rs.getString("total"));
@@ -112,8 +126,18 @@ public class CadastroItensDAO {
                         stmt.setString(1, item.getNomeItem());
                         stmt.setString(2, item.getFabricante());
                         stmt.setString(3, item.getMarca());
-                        stmt.setDate(4, java.sql.Date.valueOf(item.getDataFabricacao()));
-                        stmt.setDate(5, java.sql.Date.valueOf(item.getDataVencimento()));
+
+                        if (item.getDataFabricacao() == null || item.getDataFabricacao().isBlank()) {
+                            stmt.setNull(4, java.sql.Types.DATE);
+                        } else {
+                            stmt.setDate(4, java.sql.Date.valueOf(item.getDataFabricacao()));
+                        }
+                        if (item.getDataVencimento() == null || item.getDataVencimento().isBlank()) {
+                            stmt.setNull(5, java.sql.Types.DATE);
+                        } else {
+                            stmt.setDate(5, java.sql.Date.valueOf(item.getDataVencimento()));
+                        }
+
                         stmt.setLong(6, item.getQuantidade());
                         stmt.setString(7, item.getValor());
                         stmt.setString(8, item.getTotal());

@@ -14,9 +14,9 @@ public class PerfilController extends HttpServlet{
             throws IOException {
         
         HttpSession session = request.getSession(false);
-        
-        String perfil = (String) session.getAttribute("perfil");
-        
+
+        String perfil = (session != null) ? (String) session.getAttribute("perfil") : null;
+
         response.setContentType("application/json");
         response.getWriter().write("{\"perfil\":\"" + perfil + "\"}");
     }

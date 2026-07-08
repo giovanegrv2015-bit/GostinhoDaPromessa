@@ -3,8 +3,6 @@ async function validarLogin() {
         const res = await fetch("/api/perfil");
         const dado = await res.json();
 
-        console.log("PERFIL FRONT: ", dado.perfil);
-
         const perfil = (dado.perfil || "").toUpperCase();
         const PERFIS_COM_ACESSO = ["ADMIN", "GERENTE", "FUNCIONARIO"];
 
