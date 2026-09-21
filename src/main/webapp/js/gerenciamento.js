@@ -1,8 +1,8 @@
 let idAtual = null;
 let itensAtuais = [];
 
-const BASE_URL = "/api/estoque";
-const BASE_GERENCIAMENTO = "/api/gerenciamento"
+const URL_ESTOQUE = "../api/estoque";
+const URL_GERENCIAMENTO = "../api/gerenciamento";
 
 document.addEventListener("DOMContentLoaded", () => {
     carregarItens();
@@ -10,219 +10,203 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("modal-quantidade").addEventListener("input", calcularTotal);
     document.getElementById("modal-valor").addEventListener("input", calcularTotal);
 
-    document.getElementById("buscarGerenciamento").addEventListener("input", (e) => {
-        carregarItens(e.target.value);
-    });
+    // A busca filtra a lista que já está na memória. Antes cada tecla disparava uma
+    // requisição ao servidor, e as respostas podiam chegar fora de ordem.
+    document.getElementById("buscarGerenciamento").addEventListener("input", renderizarItens);
 
     document.getElementById("btnFecharModal").addEventListener("click", fecharModal);
     document.getElementById("btnCancelarModal").addEventListener("click", fecharModal);
     document.getElementById("btnSalvarEdicao").addEventListener("click", salvarAlteracoes);
-    document.getElementById("btnExcluirItem").addEventListener("click", () => {
-        excluirItem(idAtual);
-    });
+    document.getElementById("btnExcluirItem").addEventListener("click", () => excluirItem(idAtual));
 
     document.getElementById("modal-categoria").addEventListener("change", alternarCamposDataModal);
+    document.getElementById("modal-dataFabricacao").setAttribute("max", hojeLocalISO());
+    document.getElementById("formEdicao").addEventListener("submit", (e) => e.preventDefault());
 
     document.getElementById("modalOverlay").addEventListener("click", (e) => {
         if (e.target === document.getElementById("modalOverlay")) fecharModal();
     });
+
+    // Um único ouvinte na lista resolve os cliques de todos os cards (delegação de evento).
+    // Substitui os onclick="..." escritos dentro do HTML gerado, que a política de
+    // segurança (CSP) bloqueia e que obrigavam as funções a serem globais.
+    document.getElementById("listaItens").addEventListener("click", (e) => {
+        const botao = e.target.closest("button[data-acao]");
+        if (!botao) return;
+
+        const id = Number(botao.dataset.id);
+        if (botao.dataset.acao === "editar") abrirModal(id);
+        if (botao.dataset.acao === "nota") emitirNotaCompra(id);
+    });
 });
 
 function alternarCamposDataModal() {
-    const categoria = document.getElementById("modal-categoria").value;
+    const isEmbalagem = document.getElementById("modal-categoria").value === "Embalagens";
+    const campoFabricacao = document.getElementById("modal-dataFabricacao");
     const campoVencimento = document.getElementById("modal-dataVencimento");
 
-    const isEmbalagem = categoria === "Embalagens";
-
     campoVencimento.disabled = isEmbalagem;
+    campoVencimento.required = !isEmbalagem;
+    campoFabricacao.required = !isEmbalagem;
 
     if (isEmbalagem) {
         campoVencimento.value = "";
     }
 }
 
-async function carregarItens(busca = "") {
-
+async function carregarItens() {
     const container = document.getElementById("listaItens");
     container.innerHTML = '<div class="loading-msg">Carregando itens...</div>';
 
     try {
-        let url = BASE_URL;
-        if (busca) {
-            url += `?nome=${encodeURIComponent(busca)}`;
-        }
-
-        const response = await fetch(url);
-        if (response.ok) {
-            itensAtuais = await response.json();
-            renderizarItens(itensAtuais);
-        } else {
-            container.innerHTML = '<p class="error-msg">Erro ao carregar os itens.</p>';
-        }
+        itensAtuais = await buscarJson(URL_ESTOQUE);
+        renderizarItens();
     } catch (erro) {
-        console.error("Erro na requisição: ", erro);
-        container.innerHTML = '<p class="erro-msg">Falha de ligação ao servidor.</p>';
+        console.error("Erro ao carregar os itens:", erro);
+        container.innerHTML = '<p class="erro-msg">Não foi possível carregar os itens.</p>';
     }
 }
 
-    function renderizarItens(lista) {
-        const container = document.getElementById("listaItens");
-        container.innerHTML = "";
+function renderizarItens() {
+    const container = document.getElementById("listaItens");
+    const busca = document.getElementById("buscarGerenciamento").value.trim().toLowerCase();
 
-        if (lista.length === 0) {
-            container.innerHTML = '<p class="sem-resultado">Nenhum item encontrado.</p>';
-            return;
-        }
+    const lista = busca
+        ? itensAtuais.filter(item => (item.nomeItem || "").toLowerCase().includes(busca))
+        : itensAtuais;
 
-        lista.forEach(item => {
-            const card = document.createElement("div");
-            card.className = "card-item";
+    if (lista.length === 0) {
+        container.innerHTML = '<p class="sem-resultado">Nenhum item encontrado.</p>';
+        return;
+    }
 
-            const badgeClass = item.status === "entrada" ? "badge-entrada" : "badge-saida";
+    container.innerHTML = lista.map(item => {
+        const saida = item.status === "saida";
+        const estoqueBaixo = item.estoqueMinimo > 0 && item.quantidade <= item.estoqueMinimo;
 
-            const estoqueBaixo = item.estoqueMinimo > 0 && item.quantidade <= item.estoqueMinimo;
-            const alertaHtml = estoqueBaixo ? `
-                <div class="alerta-reposicao">
-                    Estoque baixo - reposicao necessária
-                    <button class="btn-nota" onclick="emitirNotaCompra(${item.id})">
-                    Emitir Nota de Compra
-                    </button>
-                </div>` : "";
+        const alertaHtml = estoqueBaixo ? `
+            <div class="alerta-reposicao">
+                Estoque baixo - reposição necessária
+                <button type="button" class="btn-nota" data-acao="nota" data-id="${item.id}">Emitir Nota de Compra</button>
+            </div>` : "";
 
-             card.innerHTML = `
-                <div class="card-nome">${item.nomeItem}</div>
-                <div class="card-info">Cód. Barras: <span>${item.codigoBarras}</span></div>
-                <div class="card-info">Fabricante: <span>${item.fabricante || '-'}</span></div>
-                <div class="card-info">Marca: <span>${item.marca || '-'}</span></div>
-                <div class="card-info">Local: <span>${item.local || '-'}</span></div>
-                <div class="card-info">Categoria: <span>${item.categoria || '-'}</span></div>
-                <div class="card-info">Qtd. <span class="${estoqueBaixo ? 'qtd-baixa' : ''}">${item.quantidade}</span></div>
-                <div class="card-info">Estoque mínimo: <span>${item.estoqueMinimo}</span></div>
-                <div class="card-info">Valor Unit.:<span>R$ ${parseFloat(item.valor).toFixed(2)}</span></div>
-                <div class="card-info">Vencimento: <span>${item.dataVencimento}</span></div>
-                <span class="badge-status ${badgeClass}">${item.status}</span>
+        return `
+            <div class="card-item">
+                <div class="card-nome">${escaparHtml(item.nomeItem)}</div>
+                <div class="card-info">Cód. Barras: <span>${escaparHtml(item.codigoBarras)}</span></div>
+                <div class="card-info">Fabricante: <span>${escaparHtml(item.fabricante || "-")}</span></div>
+                <div class="card-info">Marca: <span>${escaparHtml(item.marca || "-")}</span></div>
+                <div class="card-info">Local: <span>${escaparHtml(item.local || "-")}</span></div>
+                <div class="card-info">Categoria: <span>${escaparHtml(item.categoria || "-")}</span></div>
+                <div class="card-info">Qtd. <span class="${estoqueBaixo ? "qtd-baixa" : ""}">${escaparHtml(item.quantidade)}</span></div>
+                <div class="card-info">Estoque mínimo: <span>${escaparHtml(item.estoqueMinimo)}</span></div>
+                <div class="card-info">Valor Unit.: <span>${formatarMoeda(item.valor)}</span></div>
+                <div class="card-info">Vencimento: <span>${formatarData(item.dataVencimento)}</span></div>
+                <span class="badge-status ${saida ? "badge-saida" : "badge-entrada"}">${saida ? "Saída" : "Entrada"}</span>
                 ${alertaHtml}
                 <div class="acoes-card">
-                <button class="btn-gerenciar" onclick="abrirModal(${item.id})">Editar</button>
+                    <button type="button" class="btn-gerenciar" data-acao="editar" data-id="${item.id}">Editar</button>
                 </div>
-                `;
-                container.appendChild(card);
-    });
+            </div>`;
+    }).join("");
+}
+
+// 5.5 -> "5,50" (formato que o campo de valor espera)
+function valorParaCampo(valor) {
+    const numero = Number(valor);
+    if (valor === null || valor === undefined || Number.isNaN(numero)) return "";
+    return numero.toFixed(2).replace(".", ",");
 }
 
 function abrirModal(id) {
     const item = itensAtuais.find(i => i.id === id);
-    if(!item) return;
+    if (!item) return;
 
     idAtual = item.id;
 
     document.getElementById("modalTitulo").textContent = item.nomeItem;
-    document.getElementById("modal-nomeItem").value = item.nomeItem;
-    document.getElementById("modal-fabricante").value = item.fabricante || '';
-    document.getElementById("modal-marca").value = item.marca || '';
-    document.getElementById("modal-dataFabricacao").value = item.dataFabricacao || '';
-    document.getElementById("modal-dataVencimento").value = item.dataVencimento || '';
-    document.getElementById("modal-quantidade").value = item.quantidade || '';
-    document.getElementById("modal-valor").value = item.valor || '';
-    document.getElementById("modal-total").value = item.total || '';
-    document.getElementById("modal-status").value = item.status || '';
-    document.getElementById("modal-local").value = item.local || '';
-    document.getElementById("modal-categoria").value = item.categoria || '';
-    document.getElementById("modal-estoqueMinimo").value = item.estoqueMinimo || 0;
+    document.getElementById("modal-nomeItem").value = item.nomeItem || "";
+    document.getElementById("modal-fabricante").value = item.fabricante || "";
+    document.getElementById("modal-marca").value = item.marca || "";
+    document.getElementById("modal-dataFabricacao").value = item.dataFabricacao || "";
+    document.getElementById("modal-dataVencimento").value = item.dataVencimento || "";
+    // "??" e não "||": com "||" a quantidade 0 virava campo vazio e o item não salvava
+    document.getElementById("modal-quantidade").value = item.quantidade ?? "";
+    document.getElementById("modal-valor").value = valorParaCampo(item.valor);
+    document.getElementById("modal-status").value = item.status || "";
+    document.getElementById("modal-local").value = item.local || "";
+    document.getElementById("modal-categoria").value = item.categoria || "";
+    document.getElementById("modal-estoqueMinimo").value = item.estoqueMinimo ?? 0;
 
+    calcularTotal();
     alternarCamposDataModal();
 
-    document.getElementById("modalOverlay").style.display = "flex";
+    document.getElementById("modalOverlay").hidden = false;
 }
 
 function fecharModal() {
-    document.getElementById("modalOverlay").style.display = "none";
+    document.getElementById("modalOverlay").hidden = true;
     idAtual = null;
 }
 
 function calcularTotal() {
-    const qtd = parseFloat(document.getElementById("modal-quantidade").value) || 0;
-    const valorTexto = document.getElementById("modal-valor").value.replace(",", ".");
-    const valor = parseFloat(valorTexto) || 0;
-    document.getElementById("modal-total").value = (qtd * valor).toFixed(2);
+    const qtd = parseInt(document.getElementById("modal-quantidade").value, 10) || 0;
+    const valor = parseFloat(document.getElementById("modal-valor").value.replace(",", ".")) || 0;
+    document.getElementById("modal-total").value = (qtd * valor).toFixed(2).replace(".", ",");
 }
 
 async function salvarAlteracoes() {
-    if(!idAtual) return;
+    if (!idAtual) return;
 
-    const valorNormalizado = document.getElementById("modal-valor").value.replace(",", ".");
-    const valorNumerico = parseFloat(valorNormalizado);
-    const quantidadeNumerica = parseInt(document.getElementById("modal-quantidade").value);
+    // Os campos do modal agora ficam dentro de um <form>: o próprio navegador confere
+    // required, pattern, min e max e aponta o campo errado. Antes esses atributos eram enfeite.
+    const formulario = document.getElementById("formEdicao");
+    if (!formulario.reportValidity()) return;
+
     const categoria = document.getElementById("modal-categoria").value;
     const isEmbalagem = categoria === "Embalagens";
     const dataFabricacao = document.getElementById("modal-dataFabricacao").value;
     const dataVencimento = document.getElementById("modal-dataVencimento").value;
+    const valor = document.getElementById("modal-valor").value.replace(",", ".");
 
-    if (isNaN(valorNumerico) || valorNumerico <= 0) {
-        alert("O valor unitário deve ser maior que zero.");
+    if (!(parseFloat(valor) > 0)) {
+        mostrarBanner(textoDaMensagem("valor_invalido"));
+        return;
+    }
+    if (!isEmbalagem && dataFabricacao > dataVencimento) {
+        mostrarBanner(textoDaMensagem("data_invalida"));
         return;
     }
 
-    if (isNaN(quantidadeNumerica) || quantidadeNumerica < 0) {
-        alert("Preencha a quantidade corretamente.");
-        return;
-    }
-
-    const hoje = new Date().toISOString().split("T")[0];
-
-    if (!isEmbalagem) {
-        if (!dataFabricacao || !dataVencimento) {
-            alert("Preencha as datas de fabricação e vencimento.");
-            return;
-        }
-        if (dataFabricacao > hoje) {
-            alert("A data de fabricação não pode ser no futuro.");
-            return;
-        }
-        if (dataFabricacao > dataVencimento) {
-            alert("A data de fabricação não pode ser posterior à data de vencimento.");
-            return;
-        }
-    } else if (dataFabricacao && dataFabricacao > hoje) {
-        alert("A data de fabricação não pode ser no futuro.");
-        return;
-    }
-
+    // o total não é enviado: quem calcula é o servidor
     const body = {
         nomeItem: document.getElementById("modal-nomeItem").value,
         fabricante: document.getElementById("modal-fabricante").value,
         marca: document.getElementById("modal-marca").value,
         dataFabricacao: dataFabricacao || null,
         dataVencimento: isEmbalagem ? null : dataVencimento,
-        quantidade : quantidadeNumerica,
-        valor : valorNormalizado,
-        total: document.getElementById("modal-total").value,
+        quantidade: parseInt(document.getElementById("modal-quantidade").value, 10),
+        valor: valor,
         status: document.getElementById("modal-status").value,
         local: document.getElementById("modal-local").value,
         categoria: categoria,
-        estoqueMinimo: parseInt(document.getElementById("modal-estoqueMinimo").value) || 0,
+        estoqueMinimo: parseInt(document.getElementById("modal-estoqueMinimo").value, 10),
     };
 
     try {
-        const response = await fetch (
-        `${BASE_GERENCIAMENTO}?id=${encodeURIComponent(idAtual)}`,
-        {
+        await buscarJson(`${URL_GERENCIAMENTO}?id=${encodeURIComponent(idAtual)}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
-        }
-        );
+        });
 
-        if(response.ok) {
         fecharModal();
-        carregarItens();
-        }else{
-            const erroBody = await response.json().catch(() => null);
-        alert(erroBody?.erro || "Erro ao salvar as alterações. Tente novamente");
-        }
-    }catch (erro) {
-    console.error("Erro no put:", erro);
-    alert("Falha de conexão ao salvar.");
+        await carregarItens();
+        mostrarBanner(textoDaMensagem("item_atualizado"), "sucesso");
+    } catch (erro) {
+        console.error("Erro no PUT:", erro);
+        fecharModalSeItemSumiu(erro);
+        mostrarBanner(textoDaMensagem(erro.codigo));
     }
 }
 
@@ -230,34 +214,37 @@ async function excluirItem(id) {
     if (!id) return;
     if (!confirm("Tem certeza que deseja excluir este item?")) return;
 
-    try{
-        const response = await fetch(
-            `${BASE_GERENCIAMENTO}?id=${encodeURIComponent(id)}`,
-            {method: "DELETE"}
-        );
+    try {
+        await buscarJson(`${URL_GERENCIAMENTO}?id=${encodeURIComponent(id)}`, { method: "DELETE" });
 
-        if (response.ok) {
-            fecharModal();
-            carregarItens();
-        } else {
-            alert("Erro ao excluir o item. Tente novamente.");
-        }
+        fecharModal();
+        await carregarItens();
+        mostrarBanner(textoDaMensagem("item_excluido"), "sucesso");
     } catch (erro) {
-        console.error("Erro na função delete:", erro);
-        alert("Falha de conexão ao excluir.");
+        console.error("Erro no DELETE:", erro);
+        fecharModalSeItemSumiu(erro);
+        mostrarBanner(textoDaMensagem(erro.codigo));
+    }
+}
+
+// Outra pessoa (ou outra aba) pode ter excluído o item enquanto o modal estava aberto.
+function fecharModalSeItemSumiu(erro) {
+    if (erro.status === 404) {
+        fecharModal();
+        carregarItens();
     }
 }
 
 function emitirNotaCompra(id) {
     const item = itensAtuais.find(i => i.id === id);
-    if(!item) return;
+    if (!item) return;
 
     const necessario = (item.estoqueMinimo * 2) - item.quantidade;
     alert(
         `NOTA DE COMPRA\n\n` +
-        `Item: ${item.nomeItem}\n ` +
-        `Local: ${item.local || 'Não informado'}\n` +
-        `Categoria: ${item.categoria || 'Não informada'}\n` +
+        `Item: ${item.nomeItem}\n` +
+        `Local: ${item.local || "Não informado"}\n` +
+        `Categoria: ${item.categoria || "Não informada"}\n` +
         `Estoque atual: ${item.quantidade}\n` +
         `Quantidade sugerida para repor: ${necessario} unidades.`
     );

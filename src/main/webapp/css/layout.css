@@ -1,0 +1,43 @@
+/* Base comum às páginas internas (dashboard, gerenciamento e cadastro de itens).
+   Este bloco estava copiado, igual, no começo dos três arquivos CSS dessas páginas. */
+
+body {
+    background-color: var(--primary-light);
+    color: var(--gray-dark);
+    padding: 20px;
+}
+
+#header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#tituloCadastro {
+    font-size: 24px;
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+}
+
+#menu {
+    display: flex;
+    justify-content: center;
+}
+
+.menu-lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    list-style: none;
+}
+
+.menu-lista a {
+    text-decoration: none;
+    color: var(--primary-medium);
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.menu-lista a:hover {
+    color: var(--primary-dark);
+}

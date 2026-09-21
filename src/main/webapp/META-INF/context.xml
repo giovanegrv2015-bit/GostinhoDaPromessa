@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/Sistema"/>
+<!-- O atributo path="/Sistema" que existia aqui era ignorado pelo Tomcat: dentro de
+     META-INF/context.xml o caminho da aplicação vem do nome do .war (ROOT.war = "/"). -->
+<Context>
+    <!-- SameSite=Lax: o navegador não envia o cookie de sessão em POST disparado por outro site.
+         É a defesa contra CSRF (um site malicioso enviar o formulário de cadastro em nome de quem está logado). -->
+    <CookieProcessor sameSiteCookies="lax"/>
+</Context>

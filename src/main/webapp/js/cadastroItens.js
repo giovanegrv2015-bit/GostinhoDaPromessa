@@ -2,34 +2,36 @@ document.getElementById("valor").addEventListener("input", calcular);
 document.getElementById("quantidade").addEventListener("input", calcular);
 document.getElementById("categoria").addEventListener("change", alternarCamposData);
 
-const hoje = new Date().toISOString().split("T")[0];
-document.getElementById("dataFabricacao").setAttribute("max", hoje);
+// hojeLocalISO() vem do util.js. Antes era new Date().toISOString(), que devolve a data em UTC:
+// em Salvador, depois das 21h, o "máximo" do campo já era o dia seguinte.
+document.getElementById("dataFabricacao").setAttribute("max", hojeLocalISO());
 
-const CAMPOS_NUMERICOS = ["quantidade", "valor", "total", "estoqueMinimo"];
-CAMPOS_NUMERICOS.forEach((idCampo) => {
-    const campo = document.getElementById(idCampo);
-    campo.addEventListener("keydown", (e) => {
-        if (["e", "E", "+", "-"].includes(e.key)) {
-            e.preventDefault();
-        }
+// <input type="number"> aceita "e", "+" e "-" (notação científica). Aqui não faz sentido.
+bloquearTeclas(["quantidade", "estoqueMinimo"], ["e", "E", "+", "-", ".", ","]); // só inteiros
+bloquearTeclas(["valor"], ["e", "E", "+", "-"]);                                 // vírgula e ponto liberados
+
+function bloquearTeclas(idsDosCampos, teclas) {
+    idsDosCampos.forEach((idCampo) => {
+        document.getElementById(idCampo).addEventListener("keydown", (e) => {
+            if (teclas.includes(e.key)) {
+                e.preventDefault();
+            }
+        });
     });
-});
+}
 
+// O total na tela é só uma prévia para o usuário; o valor gravado é calculado no servidor.
+function calcular() {
+    const valor = parseFloat(document.getElementById("valor").value.replace(",", ".")) || 0;
+    const quantidade = parseInt(document.getElementById("quantidade").value, 10) || 0;
 
-function calcular(){
-    let valorTexto = document.getElementById("valor").value.replace(",", ".");
-    let valor = parseFloat(valorTexto) || 0;
-    let quantidade = parseInt(document.getElementById("quantidade").value) || 0;
-    
-    document.getElementById("total").value = (valor * quantidade).toFixed(2);
+    document.getElementById("total").value = (valor * quantidade).toFixed(2).replace(".", ",");
 }
 
 function alternarCamposData() {
-    const categoria = document.getElementById("categoria").value;
+    const isEmbalagem = document.getElementById("categoria").value === "Embalagens";
     const campoFabricacao = document.getElementById("dataFabricacao");
     const campoVencimento = document.getElementById("dataVencimento");
-
-    const isEmbalagem = categoria === "Embalagens";
 
     campoVencimento.disabled = isEmbalagem;
     campoVencimento.required = !isEmbalagem;

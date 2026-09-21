@@ -4,9 +4,22 @@ body {
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh; /* era height: em tela baixa o conteúdo era cortado em vez de rolar */
     background-color: var(--primary-light);
     margin: 0;
+}
+
+/* O PNG da logo é 466x466 com muita margem vazia. object-fit: none mantém o tamanho
+   original e a "janela" de 300x140 mostra só o miolo (coração + nome). O fundo do PNG
+   é o mesmo creme da página (--primary-light), então não aparece emenda. */
+.logo {
+    display: block;
+    width: 300px;
+    height: 140px;
+    max-width: 100%;
+    object-fit: none;
+    object-position: 50% 55%;
+    margin-bottom: 10px;
 }
 
 
@@ -71,4 +84,18 @@ hr {
 
 .button:hover {
     background-color: var(--success-hover);
+}
+
+/* página de erro (erro.html) reaproveita o cartão do login */
+.erro-texto {
+    text-align: center;
+    color: var(--gray-dark);
+    margin: 10px 0;
+}
+
+.erro-link {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
 }

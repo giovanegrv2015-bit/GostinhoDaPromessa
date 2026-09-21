@@ -1,11 +1,26 @@
+/* Banner flutuante: fica por cima de tudo (inclusive do modal de edição, z-index 1000),
+   então a mensagem aparece mesmo com o modal aberto e não empurra o layout. */
 .banner-mensagem {
+    position: fixed;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    width: calc(100% - 24px);
+    max-width: 600px;
     background-color: #ffe0e0;
     color: #a10000;
     border: 1px solid #a10000;
     padding: 12px 20px;
-    margin: 12px auto;
-    max-width: 600px;
     border-radius: 6px;
     text-align: center;
     font-weight: bold;
+    box-shadow: 0 4px 12px var(--shadow-default);
+    cursor: pointer;
+}
+
+.banner-sucesso {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #155724;
 }

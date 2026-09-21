@@ -1,54 +1,4 @@
-body {
-    background-color: var(--primary-light);
-    color: var(--gray-dark);
-    padding: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-#header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-#tituloCadastro {
-    font-size: 24px;
-    color: var(--primary-dark);
-    margin-bottom: 10px;
-}
-
-#menu {
-    display: flex;
-    justify-content: center;
-}
-
-.menu-lista {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-    padding: 0;
-}
-
-.menu-lista li a {
-    text-decoration: none;
-    color: var(--primary-medium);
-    font-weight: bold;
-    transition: 0.2s;
-}
-
-.menu-lista li a:hover {
-    color: var(--primary-dark);
-}
-
-.btn-menu {
-    background-color: var(--primary-medium);
-    color: var(--white) !important;
-    padding: 6px 15px;
-    border-radius: 20px;
-}
-
-.btn-menu:hover {
-    background-color: var(--primary-dark);
-}
+/* body, cabeçalho e menu: ver layout.css */
 
 #resumoEstoque {
     display: flex;
@@ -157,7 +107,7 @@ body {
     background-color: var(--white);
     box-shadow: 0 4px 6px var(--shadow-default);
     border-radius: 8px;
-    overflow: hidden;
+    overflow-x: auto; /* em tela estreita (celular) a tabela rola para o lado em vez de ser cortada */
 }
 
 #tabelaEstoque {
@@ -214,4 +164,15 @@ body {
 #btnVoltar:hover,
 #btnProximo:hover {
     background-color: var(--primary-dark);
+}
+
+#btnVoltar:disabled,
+#btnProximo:disabled {
+    background-color: var(--gray-medium);
+    cursor: default;
+}
+
+.tabela-vazia {
+    padding: 30px 12px;
+    color: var(--primary-medium);
 }

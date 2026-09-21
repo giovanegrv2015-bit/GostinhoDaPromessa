@@ -1,9 +1,9 @@
-//adicao da variavel estoque, local, categoria e estoqueMinimo
-
 package model;
 
+import java.math.BigDecimal;
+
 public class CadastroItensModel {
-    
+
     private int id;
     private String codigoBarras;
     private String nomeItem;
@@ -11,13 +11,15 @@ public class CadastroItensModel {
     private String marca;
     private String dataFabricacao;
     private String dataVencimento;
-    private long quantidade;
-    private String valor;
-    private String total;
+    // Long (e não long) para distinguir "não veio no JSON" (null) de "veio zero".
+    private Long quantidade;
+    // Dinheiro é BigDecimal: String não faz conta e double erra centavos (0.1 + 0.2 != 0.3).
+    private BigDecimal valor;
+    private BigDecimal total;
     private String status;
     private String local;
     private String categoria;
-    private long estoqueMinimo;
+    private Long estoqueMinimo;
 
     public CadastroItensModel() {
     }
@@ -70,19 +72,19 @@ public class CadastroItensModel {
         this.dataFabricacao = dataFabricacao;
     }
 
-    public long getQuantidade() {
+    public Long getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(long quantidade) {
+    public void setQuantidade(Long quantidade) {
         this.quantidade = quantidade;
     }
 
-    public String getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
@@ -102,11 +104,11 @@ public class CadastroItensModel {
         this.dataVencimento = dataVencimento;
     }
 
-    public String getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
@@ -118,11 +120,11 @@ public class CadastroItensModel {
         this.local = local;
     }
 
-    public long getEstoqueMinimo() {
+    public Long getEstoqueMinimo() {
         return estoqueMinimo;
     }
 
-    public void setEstoqueMinimo(long estoqueMinimo) {
+    public void setEstoqueMinimo(Long estoqueMinimo) {
         this.estoqueMinimo = estoqueMinimo;
     }
 

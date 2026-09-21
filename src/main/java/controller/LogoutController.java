@@ -8,18 +8,17 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/logout")
+public class LogoutController extends HttpServlet {
 
-public class LogoutController extends HttpServlet{
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-throws IOException{
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-            HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-if(session != null) {
-session.invalidate();
+        if (session != null) {
+            session.invalidate();
+        }
+
+        response.sendRedirect(request.getContextPath() + "/index.html");
+    }
 }
-
-response.sendRedirect(request.getContextPath() + "/index.html");
-}
-}
-

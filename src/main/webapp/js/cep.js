@@ -1,11 +1,28 @@
+// Busca de endereço pelo CEP (ViaCEP).
+// Antes havia dois blocos DOMContentLoaded registrando ouvintes no mesmo campo;
+// e apertar Enter buscava o CEP duas vezes (uma no Enter, outra no blur).
+
+let ultimoCepBuscado = "";
+
 document.addEventListener("DOMContentLoaded", function () {
     const campoCep = document.getElementById("cep");
 
+    // máscara 00000-000 enquanto digita
+    campoCep.addEventListener("input", function () {
+        let valor = this.value.replace(/\D/g, "").substring(0, 8);
+
+        if (valor.length > 5) {
+            valor = valor.substring(0, 5) + "-" + valor.substring(5);
+        }
+
+        this.value = valor;
+    });
+
     campoCep.addEventListener("blur", buscarCep);
 
-    campoCep.addEventListener("keypress", function (e) {
+    campoCep.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
-            e.preventDefault();
+            e.preventDefault(); // Enter no CEP busca o endereço em vez de enviar o formulário
             buscarCep();
         }
     });
@@ -17,13 +34,16 @@ async function buscarCep() {
 
     if (cep.length !== 8) {
         if (cep.length > 0) {
-            alert("O seu CEP está incorreto!!");
-            limparCamposEndereco();
+            mostrarBanner("CEP incompleto: são 8 números.");
+            campoCep.style.borderColor = "red";
         }
         return;
     }
 
-    campoCep.style.borderColor = '#aaa';
+    if (cep === ultimoCepBuscado) return;
+    ultimoCepBuscado = cep;
+
+    campoCep.style.borderColor = "#aaa";
     preencherCampos({ aguardando: true });
 
     try {
@@ -31,7 +51,7 @@ async function buscarCep() {
         const dados = await response.json();
 
         if (dados.erro) {
-            alert("CEP não encontrado.");
+            mostrarBanner("CEP não encontrado. Confira os números ou preencha o endereço à mão.");
             limparCamposEndereco();
             campoCep.style.borderColor = "red";
             return;
@@ -39,57 +59,30 @@ async function buscarCep() {
 
         preencherCampos(dados);
         campoCep.style.borderColor = "green";
-
-        // Formatar CEP
-        campoCep.value = cep.replace(/(\d{5})(\d{3})/, "$1-$2");
-
     } catch (e) {
-        alert("Verifique a conexão com a internet");
+        // o cadastro não pode depender de um serviço externo: sem ViaCEP, preenche à mão
+        mostrarBanner("Não foi possível consultar o CEP agora. Preencha o endereço à mão.");
         limparCamposEndereco();
         campoCep.style.borderColor = "red";
-        console.error('Erro na busca do CEP', e);
+        ultimoCepBuscado = "";
+        console.error("Erro na busca do CEP", e);
     }
 }
 
 function preencherCampos(dados) {
-    if (dados.aguardando) {
-        document.getElementById("endereco").value = "Buscando CEP...";
-        document.getElementById("cidade").value = "Buscando CEP...";
-        document.getElementById("bairro").value = "Buscando CEP...";
-        document.getElementById("estado").value = "Buscando CEP...";
-        return;
+    const CAMPOS = { endereco: "logradouro", cidade: "localidade", bairro: "bairro", estado: "uf" };
+
+    for (const [idCampo, chaveViaCep] of Object.entries(CAMPOS)) {
+        document.getElementById(idCampo).value = dados.aguardando ? "Buscando CEP..." : (dados[chaveViaCep] || "");
     }
 
-    document.getElementById("endereco").value = dados.logradouro || "";
-    document.getElementById("cidade").value = dados.localidade || "";
-    document.getElementById("bairro").value = dados.bairro || "";
-    document.getElementById("estado").value = dados.uf || "";
-
-    if (dados.complemento) {
+    if (!dados.aguardando && dados.complemento) {
         document.getElementById("complemento").value = dados.complemento;
     }
 }
 
 function limparCamposEndereco() {
-    document.getElementById("endereco").value = "";
-    document.getElementById("cidade").value = "";
-    document.getElementById("bairro").value = "";
-    document.getElementById("estado").value = "";
-    document.getElementById("numero").value = "";
-    document.getElementById("complemento").value = "";
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    const campoCep = document.getElementById("cep");
-
-    campoCep.addEventListener("input", function () {
-        let valor = this.value.replace(/\D/g, "");
-
-        if (valor.length > 5) {
-            valor = valor.substring(0, 5) + "-" + valor.substring(5, 8);
-        }
-
-        this.value = valor;
+    ["endereco", "cidade", "bairro", "estado"].forEach((idCampo) => {
+        document.getElementById(idCampo).value = "";
     });
-});
-
+}

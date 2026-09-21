@@ -1,0 +1,10 @@
+# O que NÃO é enviado ao Docker na hora do build. Deixa o build mais rápido
+# e garante que o .env (senhas) e o histórico do Git nunca entrem numa imagem.
+.git
+.github
+.idea
+.vscode
+.env
+target
+db
+*.md

@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
-        <link rel="stylesheet" href="../css/reset.css" />
-        <link rel="stylesheet" href="../css/color.css" />
-        <link rel="stylesheet" href="../css/cadastroItens.css"/>
-        <link rel="stylesheet" href="../css/mensagens.css" />
-        <title>Cadastro de Item</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cadastro de Item</title>
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/color.css" />
+        <link rel="stylesheet" href="../css/layout.css" />
+        <link rel="stylesheet" href="../css/cadastroItens.css"/>
+        <link rel="stylesheet" href="../css/mensagens.css" />
     </head>
     <body>
         <header id="header">
-            <h1 id="tituloCadastro">Sistema de estoque</h1>
+            <h1 id="tituloCadastro">Sistema de Estoque</h1>
             <nav id="menu">
                 <ul class="menu-lista">
                     <li><a href="dashboard.html">Início</a></li>
                     <li><a href="gerenciamento.html" class="btn-app">Gerenciamento</a></li>
                     <li><a href="cadastro.html" id="btnCadastroFuncionario" class="btn-app">Cadastro</a></li>
-                    <li><a href="#" id="btnLogout">Sair</a></li>
+                    <li><a href="../logout">Sair</a></li>
                 </ul>
             </nav>
         </header>
@@ -27,22 +28,22 @@
                     <div class="linha-form">
                     <div class="grupo-form">
                         <label for="codigoBarras">Código de Barras</label>
-                        <input type="text" title="USE APENAS NÚMEROS!" pattern="[0-9]+" name="codigoBarras" id="codigoBarras" placeholder="Digite o código de barras aqui:" required />
+                        <input type="text" inputmode="numeric" maxlength="100" title="USE APENAS NÚMEROS!" pattern="[0-9]+" name="codigoBarras" id="codigoBarras" placeholder="Digite o código de barras aqui:" required />
                     </div>
                     <div class="grupo-form">
                         <label for="nomeItem" >Nome do Item</label>
-                        <input type="text" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" pattern="[A-Za-zÀ-ÿ0-9 \-\/]+" name="nomeItem" id="nomeItem" placeholder="Digite o nome do item aqui:" required />
+                        <input type="text" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" pattern="[A-Za-zÀ-ÿ0-9 \-\/]+" maxlength="100" name="nomeItem" id="nomeItem" placeholder="Digite o nome do item aqui:" required />
                     </div>
                     </div>
 
                     <div class="linha-form">
                     <div class="grupo-form">
                         <label for="fabricante" >Fabricante</label>
-                        <input type="text" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" pattern="[A-Za-zÀ-ÿ0-9 ]+" name="fabricante" id="fabricante" placeholder="Digite o nome do fabricante aqui:" required />
+                        <input type="text" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" pattern="[A-Za-zÀ-ÿ0-9 ]+" maxlength="100" name="fabricante" id="fabricante" placeholder="Digite o nome do fabricante aqui:" required />
                     </div>
                     <div class="grupo-form">
                         <label for="marca" >Marca</label>
-                        <input type="text" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" pattern="[A-Za-zÀ-ÿ0-9 ]+"  name="marca" id="marca" placeholder="Digite o nome da marca aqui:" required />
+                        <input type="text" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" pattern="[A-Za-zÀ-ÿ0-9 ]+"  maxlength="100" name="marca" id="marca" placeholder="Digite o nome da marca aqui:" required />
                     </div>
                     </div>
 
@@ -71,11 +72,11 @@
                     </div>
 
                     <div class="linha-form">
-                        <div class="grupo-form full">
-                            <label>Total</label>
-                            <input type="number" name="total" id="total" />
+                        <div class="grupo-form">
+                            <label for="total">Total</label>
+                            <input type="text" id="total" value="0,00" readonly tabindex="-1" />
                         </div>
-                        <div class="grupo-form full">
+                        <div class="grupo-form">
                             <label for="status">Status</label>
                             <select id="status" name="status">
                                 <option value="entrada">Entrada</option>
@@ -119,9 +120,9 @@
                 </form>
             </section>
         </main>
-        <script src="../js/cadastroItens.js"></script>
+        <script src="../js/util.js"></script>
         <script src="../js/mensagens.js"></script>
+        <script src="../js/cadastroItens.js"></script>
         <script src="../js/validarLogin.js"></script>
-        <script src="../js/logout.js"></script>
     </body>
 </html>

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gerenciamento</title>
         <link rel="stylesheet" href="../css/reset.css"/>
         <link rel="stylesheet" href="../css/color.css"/>
+        <link rel="stylesheet" href="../css/layout.css"/>
         <link rel="stylesheet" href="../css/gerenciamento.css"/>
         <link rel="stylesheet" href="../css/mensagens.css"/>
-        <title>Gerenciamento</title>
     </head>
     
     <body>
@@ -18,7 +19,7 @@
                     <li><a href="dashboard.html">Início</a></li>
                     <li><a href="gerenciamento.html" class="btn-app">Gerenciamento</a></li>
                     <li><a href="cadastro.html" id="btnCadastroFuncionario" class="btn-app">Cadastro</a></li>
-                    <li><a href="#" id="btnLogout">Sair</a></li>
+                    <li><a href="../logout">Sair</a></li>
                 </ul>
             </nav>
         </header>
@@ -33,61 +34,61 @@
                     </div>
                 </div>
                 <div id="listaItens" class="lista-itens">
-                    <div class="loading-msg" id="loadingMsg">Carregando Itens</div>
+                    <div class="loading-msg">Carregando itens...</div>
                 </div>
             </section>
         </main>
 
-        <div id="modalOverlay" class="modal-overlay" style="display:none;">
+        <div id="modalOverlay" class="modal-overlay" hidden>
             <div class="modal">
                 <div class="modal-header">
                     <h3 id="modalTitulo">Editar Item</h3>
-                    <button class="modal-fechar" id="btnFecharModal">&times;</button>
+                    <button type="button" class="modal-fechar" id="btnFecharModal" aria-label="Fechar">&times;</button>
                 </div>
-                <div class="modal-body">
+                <form id="formEdicao" class="modal-body">
                     <div class="linha-form">
                         <div class="grupo-form">
-                            <label>Nome do Item</label>
-                            <input type="text" id="modal-nomeItem" pattern="[A-Za-zÀ-ÿ0-9 \-\/]+"/>
+                            <label for="modal-nomeItem">Nome do Item</label>
+                            <input type="text" id="modal-nomeItem" maxlength="100" pattern="[A-Za-zÀ-ÿ0-9 \-\/]+" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" required/>
                         </div>
                     </div>
                     <div class="linha-form">
                         <div class="grupo-form">
-                            <label>Fabricante</label>
-                            <input type="text" id="modal-fabricante" pattern="[A-Za-zÀ-ÿ0-9 ]+"/>
+                            <label for="modal-fabricante">Fabricante</label>
+                            <input type="text" id="modal-fabricante" maxlength="100" pattern="[A-Za-zÀ-ÿ0-9 ]+" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!"/>
                         </div>
                         <div class="grupo-form">
-                            <label>Marca</label>
-                            <input type="text" id="modal-marca" pattern="[A-Za-zÀ-ÿ0-9 ]+"/>
+                            <label for="modal-marca">Marca</label>
+                            <input type="text" id="modal-marca" maxlength="100" pattern="[A-Za-zÀ-ÿ0-9 ]+" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!"/>
                         </div>
                     </div>
                     <div class="linha-form">
                         <div class="grupo-form">
-                            <label>Data de Fabricação</label>
+                            <label for="modal-dataFabricacao">Data de Fabricação</label>
                             <input type="date" id="modal-dataFabricacao" min="2000-01-01"/>
                         </div>
                         <div class="grupo-form">
-                            <label>Data de Vencimento</label>
+                            <label for="modal-dataVencimento">Data de Vencimento</label>
                             <input type="date" id="modal-dataVencimento"/>
                         </div>
                     </div>
                     <div class="linha-form">
                         <div class="grupo-form">
-                            <label>Quantidade</label>
-                            <input type="number" id="modal-quantidade"/>
+                            <label for="modal-quantidade">Quantidade</label>
+                            <input type="number" id="modal-quantidade" min="0" step="1" required/>
                         </div>
                         <div class="grupo-form">
-                            <label>Valor Unitário</label>
-                            <input type="text" inputmode="decimal" id="modal-valor" pattern="[0-9]+([.,][0-9]{1,2})?" title="Use vírgula ou ponto para os centavos (ex: 5,50 ou 5.50)"/>
+                            <label for="modal-valor">Valor Unitário</label>
+                            <input type="text" inputmode="decimal" id="modal-valor" required pattern="[0-9]+([.,][0-9]{1,2})?" title="Use vírgula ou ponto para os centavos (ex: 5,50 ou 5.50)"/>
                         </div>
                     </div>
                     <div class="linha-form">
                         <div class="grupo-form">
-                            <label>Total</label>
-                            <input type="number" id="modal-total" disabled class="input-disabled"/>
+                            <label for="modal-total">Total</label>
+                            <input type="text" id="modal-total" disabled class="input-disabled"/>
                         </div>
                         <div class="grupo-form">
-                            <label>Status</label>
+                            <label for="modal-status">Status</label>
                             <select id="modal-status">
                                 <option value="entrada">Entrada</option>
                                 <option value="saida">Saída</option>
@@ -96,16 +97,16 @@
                     </div>
                     <div class="linha-form">
                         <div class="grupo-form">
-                            <label>Local de Armazenamento</label>
-                            <select id="modal-local">
+                            <label for="modal-local">Local de Armazenamento</label>
+                            <select id="modal-local" required>
                                 <option value="Freezer">Freezer</option>
                                 <option value="Refrigerador">Refrigerador</option>
                                 <option value="Prateleira">Prateleira</option>
                             </select>
                         </div>
                         <div class="grupo-form">
-                            <label>Categoria</label>
-                            <select id="modal-categoria">
+                            <label for="modal-categoria">Categoria</label>
+                            <select id="modal-categoria" required>
                                 <option value="Matéria Prima">Matéria Prima</option>
                                 <option value="Produto Final">Produto Final</option>
                                 <option value="Embalagens">Embalagens</option>
@@ -114,22 +115,22 @@
                     </div>
                     <div class="linha-form">
                         <div class="grupo-form">
-                            <label>Estoque Mínimo</label>
-                            <input type="number" id="modal-estoqueMinimo" min="0"/>
+                            <label for="modal-estoqueMinimo">Estoque Mínimo</label>
+                            <input type="number" id="modal-estoqueMinimo" min="0" step="1" required/>
                         </div>
                     </div>
-                </div>
+                </form>
                 <div class="modal-footer">
-                    <button id="btnSalvarEdicao" class="btn-salvar">Salvar Alterações</button>
-                    <button id="btnExcluirItem" class="btn-excluir">Excluir Item</button>
-                    <button id="btnCancelarModal" class="btn-cancelar">Cancelar</button>
+                    <button type="button" id="btnSalvarEdicao" class="btn-salvar">Salvar Alterações</button>
+                    <button type="button" id="btnExcluirItem" class="btn-excluir">Excluir Item</button>
+                    <button type="button" id="btnCancelarModal" class="btn-cancelar">Cancelar</button>
                 </div>
             </div>
         </div>
 
+        <script src="../js/util.js"></script>
+        <script src="../js/mensagens.js"></script>
         <script src="../js/gerenciamento.js"></script>
         <script src="../js/validarLogin.js"></script>
-        <script src="../js/logout.js"></script>
-        <script src="../js/mensagens.js"></script>
     </body>
 </html>

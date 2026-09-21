@@ -1,38 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gostinho Da Promessa</title>
     <link rel="stylesheet" href="css/reset.css"/>
     <link rel="stylesheet" href="css/color.css"/>
     <link rel="stylesheet" href="css/login.css"/>
     <link rel="stylesheet" href="css/mensagens.css"/>
-    <title>Gostinho Da Promessa</title>
 </head>
 
 <body>
     <header>
-        <div class="box-title">
-        </div>
+        <img class="logo" src="assets/img/logo-gostinho.png" alt="Gostinho da Promessa - Confeitaria Afetiva" width="300" height="140"/>
     </header>
     <main>
         <form action="login" method="post">
             <div class="content">
-                <div class="Login"> 
-                    <h2 class="Title">LOGIN</h2>
-                <hr>
+                <div class="Login">
+                    <h1 class="Title">LOGIN</h1>
+                    <hr>
                 </div>
                 <div class="User">
-                    <label>Usuário</label>
+                    <label for="users">Usuário</label>
                     <hr>
-                    <input type="text" name="users" class="inputUser" placeholder="Informe o Usuário" />
-                    </div>
+                    <input type="text" id="users" name="users" class="inputUser" placeholder="Informe o Usuário" autocomplete="username" required autofocus />
+                </div>
                 <div class="Password">
-                    <label>Senha</label>
+                    <label for="psw">Senha</label>
                     <hr>
-                    <input type="password" name="psw" class="inputPassword" placeholder="Informe a sua senha" />
-                    </div>
+                    <input type="password" id="psw" name="psw" class="inputPassword" placeholder="Informe a sua senha" autocomplete="current-password" required />
+                </div>
                 <div class="box-button">
                     <button type="submit" class="button">Entrar</button>
                 </div>

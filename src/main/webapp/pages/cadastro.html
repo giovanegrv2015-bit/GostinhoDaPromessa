@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cadastro</title>
         <link rel="stylesheet" href="../css/reset.css"/>
         <link rel="stylesheet" href="../css/color.css"/>
         <link rel="stylesheet" href="../css/cadastro.css">
         <link rel="stylesheet" href="../css/mensagens.css"/>
-        <title>Cadastro</title>
     </head>
     <body>
          <header id="header">
@@ -17,6 +17,7 @@
                     <li><a href="dashboard.html">Inicio</a></li>
                     <li><a href="gerenciamento.html">Gerenciamento</a></li>
                     <li><a href="cadastroItens.html">Cadastro de Itens</a></li>
+                    <li><a href="../logout">Sair</a></li>
                 </ul>
             </nav>
         </header>
@@ -25,15 +26,15 @@
                 <div class="container">
                     <div class="dadosPessoais">
                         <label for="nameFirst">NOME</label>
-                        <input type="text" name="nameFirst" id="nameFirst" pattern="[A-Za-zÀ-ÿ ]+" placeholder="Digite o seu nome aqui:" title="Por favor, use apenas letras, sem símbolos ou emojis!" required />
+                        <input type="text" name="nameFirst" id="nameFirst" maxlength="50" pattern="[A-Za-zÀ-ÿ ]+" placeholder="Digite o seu nome aqui:" title="Por favor, use apenas letras, sem símbolos ou emojis!" required />
                         <label for="sobreNome">SOBRENOME</label>
-                        <input type="text" name="sobreNome" id="sobreNome" pattern="[A-Za-zÀ-ÿ ]+" placeholder="Digite o seu sobrenome aqui:" title="Por favor, use apenas letras, sem símbolos ou emojis!" required/>
+                        <input type="text" name="sobreNome" id="sobreNome" maxlength="50" pattern="[A-Za-zÀ-ÿ ]+" placeholder="Digite o seu sobrenome aqui:" title="Por favor, use apenas letras, sem símbolos ou emojis!" required/>
                         <label for="matricula">MATRICULA</label>
-                        <input type="text" name="matricula" id="matricula" pattern="[0-9]+" placeholder="Digite a sua matricula aqui:" title="Use apenas letras e números, sem espaços ou símbolos" required/>
+                        <input type="text" name="matricula" id="matricula" pattern="[0-9]+" inputmode="numeric" maxlength="50" placeholder="Digite a sua matricula aqui:" title="Use apenas números" required/>
                         <label for="cpf">CPF</label>
-                        <input type="text" name="cpf" id="cpf" pattern="[0-9]+" title="Por favor, use apenas números!" placeholder="Digite o seu CPF aqui:" required/>
+                        <input type="text" name="cpf" id="cpf" pattern="[0-9]{11}" inputmode="numeric" maxlength="11" title="Digite os 11 números do CPF, sem pontos ou traço" placeholder="Digite o seu CPF aqui:" required/>
                         <p>Sexo</p>
-                        <select name="opcao" id="opcao">
+                        <select name="opcao" id="opcao" aria-label="Sexo">
                             <option value="">Selecione o sexo</option>
                             <option value="1">Masculino</option>
                             <option value="2">Feminino</option>
@@ -41,13 +42,13 @@
                         <label for="dtaNascimento">Data de Nascimento</label>
                         <input type="date" name="dtaNascimento" id="dtaNascimento" required/>
                         <label for="email">E-MAIL</label>
-                        <input type="email" name="email" id="email" placeholder="Digite o seu E-mail aqui:" required/>
+                        <input type="email" name="email" id="email" maxlength="50" placeholder="Digite o seu E-mail aqui:" required/>
                         <label for="telefone">TELEFONE</label>
-                        <input type="tel" name="telefone" id="telefone" placeholder="(00)0 0000-0000" pattern="[0-9()\-\s]+" required/>
+                        <input type="tel" name="telefone" id="telefone" maxlength="25" placeholder="(00)0 0000-0000" pattern="[0-9\(\)\-\s]+" title="Use apenas números, parênteses, espaço e traço" required/>
                         <label for="usuario">USUÁRIO</label>
-                        <input type="text" name="usuario" id="usuario" placeholder="Digite o seu usuário aqui:" pattern="[A-Za-zÀ-ÿ]+" title="Use apenas letras, sem numeros ou símbolos" required/>
+                        <input type="text" name="usuario" id="usuario" maxlength="100" autocomplete="off" placeholder="Digite o seu usuário aqui:" pattern="[A-Za-zÀ-ÿ]+" title="Use apenas letras, sem espaços, números ou símbolos" required/>
                         <label for="senha">SENHA</label>
-                        <input type="password" name="senha" id="senha" placeholder="Digite a sua senha aqui:" required/>
+                        <input type="password" name="senha" id="senha" minlength="8" maxlength="72" autocomplete="new-password" placeholder="Mínimo de 8 caracteres" required/>
                         <label for="funcao">FUNÇÃO</label>
                         <select name="funcao" id="funcao" required>
                             <option value="">Selecione a função</option>
@@ -59,20 +60,20 @@
                     </div>
                     <div class="containerEndereco">
                         <label for="cep">CEP</label>
-                        <input type="text" name="cep" id="cep"  required/>
+                        <input type="text" name="cep" id="cep" inputmode="numeric" maxlength="9" pattern="[0-9]{5}-?[0-9]{3}" title="CEP com 8 números" placeholder="00000-000" required/>
                         <label for="endereco">ENDEREÇO</label>
-                        <input type="text" name="endereco" id="endereco" pattern="[A-Za-zÀ-ÿ0-9 ]+" title="Use apenas letras e números, sem símbolos ou emojis" required/>
+                        <input type="text" name="endereco" id="endereco" maxlength="50" pattern="[A-Za-zÀ-ÿ0-9 .,'ºª\(\)\/\-]+" title="Use letras, números e pontuação simples, sem emojis" required/>
                         <label for="cidade">CIDADE</label>
-                        <input type="text" name="cidade" id="cidade" pattern="[A-Za-zÀ-ÿ ]+" title="Use apenas letras, sem números, símbolos ou emojis" required/>
+                        <input type="text" name="cidade" id="cidade" maxlength="50" pattern="[A-Za-zÀ-ÿ '\-]+" title="Use apenas letras (apóstrofo e hífen são aceitos)" required/>
                         <label for="bairro">BAIRRO</label>
-                        <input type="text" name="bairro" id="bairro" pattern="[A-Za-zÀ-ÿ0-9 ]+" title="Use apenas letras e números, sem símbolos ou emojis" required/>
+                        <input type="text" name="bairro" id="bairro" maxlength="50" pattern="[A-Za-zÀ-ÿ0-9 .,'ºª\(\)\/\-]+" title="Use letras, números e pontuação simples, sem emojis" required/>
                         <label for="estado">ESTADO</label>
-                        <input type="text" name="estado" id="estado" pattern="[A-Za-zÀ-ÿ ]+" title="Use apenas letras, sem números, símbolos ou emojis" required/>
+                        <input type="text" name="estado" id="estado" maxlength="20" pattern="[A-Za-zÀ-ÿ ]+" title="Use apenas letras, sem números, símbolos ou emojis" required/>
                         <label for="numero">NÚMERO</label>
-                        <input type="text" name="numero" id="numero" pattern="[A-Za-z0-9\-\/]+" title="Digite o número do endereço (ex: 98, 98A, S/N)"
+                        <input type="text" name="numero" id="numero" maxlength="20" pattern="[A-Za-z0-9\-\/]+" title="Digite o número do endereço (ex: 98, 98A, S/N)"
                                placeholder="Ex: 98, 98A ou S/N" required/>
                         <label for="complemento">COMPLEMENTO</label>
-                        <input type="text" name="complemento" id="complemento" pattern="[A-Za-zÀ-ÿ0-9 ]*" title="Use apenas letras e números, sem símbolos ou emojis" placeholder="Digite o seu complemento aqui:"/>
+                        <input type="text" name="complemento" id="complemento" maxlength="50" pattern="[A-Za-zÀ-ÿ0-9 .,'ºª\(\)\/\-]*" title="Use letras, números e pontuação simples, sem emojis" placeholder="Digite o seu complemento aqui:"/>
                     </div>
                     <div class="btn">
                         <button type="submit">Cadastrar</button>
@@ -80,7 +81,7 @@
                 </div>
             </form>
         </main>
-        <script src="../js/cep.js"></script>
         <script src="../js/mensagens.js"></script>
+        <script src="../js/cep.js"></script>
     </body>
 </html>
