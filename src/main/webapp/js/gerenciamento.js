@@ -93,8 +93,7 @@ function renderizarItens() {
         return `
             <div class="card-item">
                 <div class="card-nome">${escaparHtml(item.nomeItem)}</div>
-                <div class="card-info">Cód. Barras: <span>${escaparHtml(item.codigoBarras)}</span></div>
-                <div class="card-info">Fabricante: <span>${escaparHtml(item.fabricante || "-")}</span></div>
+                <div class="card-info">Cód. Barras: <span>${escaparHtml(item.codigoBarras || "-")}</span></div>
                 <div class="card-info">Marca: <span>${escaparHtml(item.marca || "-")}</span></div>
                 <div class="card-info">Local: <span>${escaparHtml(item.local || "-")}</span></div>
                 <div class="card-info">Categoria: <span>${escaparHtml(item.categoria || "-")}</span></div>
@@ -126,7 +125,6 @@ function abrirModal(id) {
 
     document.getElementById("modalTitulo").textContent = item.nomeItem;
     document.getElementById("modal-nomeItem").value = item.nomeItem || "";
-    document.getElementById("modal-fabricante").value = item.fabricante || "";
     document.getElementById("modal-marca").value = item.marca || "";
     document.getElementById("modal-dataFabricacao").value = item.dataFabricacao || "";
     document.getElementById("modal-dataVencimento").value = item.dataVencimento || "";
@@ -181,7 +179,6 @@ async function salvarAlteracoes() {
     // o total não é enviado: quem calcula é o servidor
     const body = {
         nomeItem: document.getElementById("modal-nomeItem").value,
-        fabricante: document.getElementById("modal-fabricante").value,
         marca: document.getElementById("modal-marca").value,
         dataFabricacao: dataFabricacao || null,
         dataVencimento: isEmbalagem ? null : dataVencimento,

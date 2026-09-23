@@ -39,8 +39,9 @@ public class GerenciamentoController extends HttpServlet {
         }
         item.setId(id);
 
-        // o código de barras não é editável nesta tela, por isso não é exigido aqui
-        String erro = ValidadorItem.validar(item, false);
+        // o código de barras não é editável nesta tela; chega null no JSON e,
+        // como é opcional, o validador apenas o ignora
+        String erro = ValidadorItem.validar(item);
         if (erro != null) {
             JsonUtil.enviarErro(response, HttpServletResponse.SC_BAD_REQUEST, erro);
             return;

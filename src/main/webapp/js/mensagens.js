@@ -18,7 +18,7 @@ const MENSAGENS = {
     "texto_longo": "Um dos campos de texto passou do tamanho permitido.",
 
     // cadastro e edição de item
-    "campos_obrigatorios": "Preencha o nome do item e o código de barras.",
+    "campos_obrigatorios": "Preencha o nome do item.",
     "texto_invalido": "Use apenas letras e números (sem símbolos ou emojis), com no máximo 100 caracteres.",
     "opcao_invalida": "Selecione status, local e categoria a partir das listas.",
     "numero_invalido": "Preencha corretamente os campos numéricos (quantidade, valor com até 2 casas decimais e estoque mínimo).",

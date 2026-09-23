@@ -27,8 +27,8 @@
                 <form action="../cadastroItens" method="POST" id="formCadastro">
                     <div class="linha-form">
                     <div class="grupo-form">
-                        <label for="codigoBarras">Código de Barras</label>
-                        <input type="text" inputmode="numeric" maxlength="100" title="USE APENAS NÚMEROS!" pattern="[0-9]+" name="codigoBarras" id="codigoBarras" placeholder="Digite o código de barras aqui:" required />
+                        <label for="codigoBarras">Código de Barras (opcional)</label>
+                        <input type="text" inputmode="numeric" maxlength="100" title="USE APENAS NÚMEROS!" pattern="[0-9]+" name="codigoBarras" id="codigoBarras" placeholder="Deixe em branco se não usar leitor" />
                     </div>
                     <div class="grupo-form">
                         <label for="nomeItem" >Nome do Item</label>
@@ -37,10 +37,6 @@
                     </div>
 
                     <div class="linha-form">
-                    <div class="grupo-form">
-                        <label for="fabricante" >Fabricante</label>
-                        <input type="text" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" pattern="[A-Za-zÀ-ÿ0-9 ]+" maxlength="100" name="fabricante" id="fabricante" placeholder="Digite o nome do fabricante aqui:" required />
-                    </div>
                     <div class="grupo-form">
                         <label for="marca" >Marca</label>
                         <input type="text" title="USE APENAS LETRAS, SEM SÍMBOLOS OU EMOJIS!" pattern="[A-Za-zÀ-ÿ0-9 ]+"  maxlength="100" name="marca" id="marca" placeholder="Digite o nome da marca aqui:" required />

@@ -7,7 +7,6 @@ public class CadastroItensModel {
     private int id;
     private String codigoBarras;
     private String nomeItem;
-    private String fabricante;
     private String marca;
     private String dataFabricacao;
     private String dataVencimento;
@@ -46,14 +45,6 @@ public class CadastroItensModel {
 
     public void setNomeItem(String nomeItem) {
         this.nomeItem = nomeItem;
-    }
-
-    public String getFabricante() {
-        return fabricante;
-    }
-
-    public void setFabricante(String fabricante) {
-        this.fabricante = fabricante;
     }
 
     public String getMarca() {

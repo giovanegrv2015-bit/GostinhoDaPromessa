@@ -67,29 +67,24 @@ public class ValidadorItem {
     /**
      * Valida e normaliza o item (tira espaços, zera o vencimento de embalagem,
      * calcula o total). O total NUNCA vem do navegador: quem faz a conta é o servidor.
+     *
+     * Único campo de texto obrigatório é o nome do item. Os demais, se vierem
+     * preenchidos, precisam bater com o padrão de caracteres permitido.
      */
-    public static String validar(CadastroItensModel item, boolean exigirCodigoBarras) {
+    public static String validar(CadastroItensModel item) {
         item.setNomeItem(limpar(item.getNomeItem()));
-        item.setFabricante(limpar(item.getFabricante()));
         item.setMarca(limpar(item.getMarca()));
+        // Código de barras é opcional: só faz sentido com leitor, e hoje o cadastro é
+        // digitado à mão. Se vier preenchido, ainda tem que ser só dígitos.
+        item.setCodigoBarras(limpar(item.getCodigoBarras()));
 
         if (item.getNomeItem() == null) {
             return "campos_obrigatorios";
         }
         if (!textoValido(item.getNomeItem(), TEXTO_NOME)
-                || !textoValido(item.getFabricante(), TEXTO_SIMPLES)
-                || !textoValido(item.getMarca(), TEXTO_SIMPLES)) {
+                || !textoValido(item.getMarca(), TEXTO_SIMPLES)
+                || !textoValido(item.getCodigoBarras(), SO_DIGITOS)) {
             return "texto_invalido";
-        }
-
-        if (exigirCodigoBarras) {
-            item.setCodigoBarras(limpar(item.getCodigoBarras()));
-            if (item.getCodigoBarras() == null) {
-                return "campos_obrigatorios";
-            }
-            if (!textoValido(item.getCodigoBarras(), SO_DIGITOS)) {
-                return "texto_invalido";
-            }
         }
 
         if (!STATUS_VALIDOS.contains(String.valueOf(item.getStatus()))

@@ -4,7 +4,7 @@
 // que busca (carregarEstoque) e UMA que desenha (renderizarTabela).
 
 const ITENS_POR_PAGINA = 10;
-const TOTAL_COLUNAS = 10;
+const TOTAL_COLUNAS = 9;
 
 let itens = [];        // resultado da última busca
 let paginaAtual = 1;
@@ -51,9 +51,8 @@ function renderizarTabela() {
     // (innerHTML += dentro do laço refaz a tabela inteira a cada item)
     document.getElementById("corpoTabela").innerHTML = itensDaPagina.map(item => `
         <tr>
-            <td>${escaparHtml(item.codigoBarras)}</td>
+            <td>${escaparHtml(item.codigoBarras || "-")}</td>
             <td>${escaparHtml(item.nomeItem)}</td>
-            <td>${escaparHtml(item.fabricante || "-")}</td>
             <td>${escaparHtml(item.marca || "-")}</td>
             <td>${formatarData(item.dataFabricacao)}</td>
             <td>${formatarData(item.dataVencimento)}</td>

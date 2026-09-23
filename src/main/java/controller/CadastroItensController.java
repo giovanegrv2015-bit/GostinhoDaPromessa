@@ -24,7 +24,6 @@ public class CadastroItensController extends HttpServlet {
 
         item.setCodigoBarras(request.getParameter("codigoBarras"));
         item.setNomeItem(request.getParameter("nomeItem"));
-        item.setFabricante(request.getParameter("fabricante"));
         item.setMarca(request.getParameter("marca"));
         item.setDataFabricacao(request.getParameter("dataFabricacao"));
         item.setDataVencimento(request.getParameter("dataVencimento"));
@@ -36,7 +35,7 @@ public class CadastroItensController extends HttpServlet {
         item.setEstoqueMinimo(ValidadorItem.paraLong(request.getParameter("estoqueMinimo")));
         // o campo "total" do formulário é só visual: quem calcula o total é o ValidadorItem
 
-        String erro = ValidadorItem.validar(item, true);
+        String erro = ValidadorItem.validar(item);
         if (erro != null) {
             response.sendRedirect(PAGINA_FORMULARIO + "?erro=" + erro);
             return;

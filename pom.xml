@@ -40,6 +40,15 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
+        <!-- Testes unitários. JUnit 6 exige Java 17+, que já é o baseline deste projeto
+             (ver <release>17</release> abaixo). "test" = só entra no classpath de teste,
+             não vai para o .war. -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>6.1.3</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     
     <build>
@@ -56,6 +65,13 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.4.0</version>
+            </plugin>
+            <!-- Sem isso, o "mvn test"/"mvn package" roda com a versão antiga do Surefire
+                 (herdada do Maven), que não sabe rodar testes JUnit 5/6 (JUnit Platform). -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.6.0</version>
             </plugin>
         </plugins>
     </build>

@@ -25,7 +25,7 @@ jobs:
           cache: maven
         
       - name: Build da aplicação
-        run: mvn clean package -DskipTests
+        run: mvn clean package
         
       - name: Salvar
         uses: actions/upload-artifact@v4

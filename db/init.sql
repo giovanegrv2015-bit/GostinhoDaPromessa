@@ -30,9 +30,9 @@ create table users (
 
 create table itens (
     id int auto_increment primary key,
-    codigo_barras varchar(100) not null,
+    -- opcional: só é preenchido quando houver leitor de código de barras
+    codigo_barras varchar(100),
     nome_item varchar(100) not null,
-    fabricante varchar(100),
     marca varchar(100),
     data_fabricacao date,
     data_vencimento date,

@@ -23,14 +23,14 @@ import model.CadastroItensModel;
 public class CadastroItensDAO {
 
     private static final String COLUNAS =
-            "id, codigo_barras, nome_item, fabricante, marca, data_fabricacao, data_vencimento, "
+            "id, codigo_barras, nome_item, marca, data_fabricacao, data_vencimento, "
             + "quantidade, valor, total, status, local, categoria, estoque_minimo";
 
     public void salvar(CadastroItensModel item) throws SQLException {
         String sql = "INSERT INTO itens "
-                + "(codigo_barras, nome_item, fabricante, marca, data_fabricacao, data_vencimento, "
+                + "(codigo_barras, nome_item, marca, data_fabricacao, data_vencimento, "
                 + "quantidade, valor, total, status, local, categoria, estoque_minimo) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -90,7 +90,7 @@ public class CadastroItensDAO {
     /** Devolve false quando o id não existe. */
     public boolean atualizar(CadastroItensModel item) throws SQLException {
         String sql = "UPDATE itens SET "
-                + "nome_item = ?, fabricante = ?, marca = ?, "
+                + "nome_item = ?, marca = ?, "
                 + "data_fabricacao = ?, data_vencimento = ?, "
                 + "quantidade = ?, valor = ?, total = ?, status = ?, "
                 + "local = ?, categoria = ?, estoque_minimo = ? "
@@ -142,7 +142,7 @@ public class CadastroItensDAO {
     }
 
     /**
-     * Os 12 campos que o INSERT e o UPDATE têm em comum, na mesma ordem.
+     * Os 11 campos que o INSERT e o UPDATE têm em comum, na mesma ordem.
      * Antes esse bloco estava copiado nos dois métodos.
      * Devolve o índice do próximo parâmetro livre.
      */
@@ -150,7 +150,6 @@ public class CadastroItensDAO {
             throws SQLException {
         int i = inicio;
         stmt.setString(i++, item.getNomeItem());
-        stmt.setString(i++, item.getFabricante());
         stmt.setString(i++, item.getMarca());
         setData(stmt, i++, item.getDataFabricacao());
         setData(stmt, i++, item.getDataVencimento());
@@ -180,7 +179,6 @@ public class CadastroItensDAO {
         i.setId(rs.getInt("id"));
         i.setCodigoBarras(rs.getString("codigo_barras"));
         i.setNomeItem(rs.getString("nome_item"));
-        i.setFabricante(rs.getString("fabricante"));
         i.setMarca(rs.getString("marca"));
 
         LocalDate fabricacao = rs.getObject("data_fabricacao", LocalDate.class);
